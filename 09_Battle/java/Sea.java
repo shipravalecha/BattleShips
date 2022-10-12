@@ -48,6 +48,11 @@ class Sea {
         tiles[index(x, y)] = value;
     }
 
+    // Created public method to call private method for testing purposes
+    public int[] getArray() {
+        return tiles;
+    }
+
     // map the coordinates to the array index
     private int index(int x, int y) {
         if ((x < 0) || (x >= size))
