@@ -44,7 +44,7 @@ public class Input {
             // each field should contain an integer from 1 to the size of the sea
             try {
                 for (int c = 0 ; c < 2; ++c ) {
-                    int val = Integer.parseInt(fields[c].strip());
+                    int val = Integer.parseInt(fields[c].trim());
                     if ((val < 1) || (val > scale)) {
                         System.out.println("Coordinates must be from 1 to " + scale);
                         error = true;

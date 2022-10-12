@@ -1,0 +1,130 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > SeaTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: SeaTest (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SeaTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (4/5)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import org.junit.jupiter.api.Assertions;
+&nbsp;//import org.junit.jupiter.api.Disabled;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;import org.junit.jupiter.params.ParameterizedTest;
+&nbsp;import org.junit.jupiter.params.provider.CsvSource;
+&nbsp;import org.junit.jupiter.params.provider.ValueSource;
+&nbsp;
+<b class="fc">&nbsp;public class SeaTest {</b>
+&nbsp;    Sea sea;
+&nbsp;    @Test
+&nbsp;    public void SampleTest() {
+<b class="nc">&nbsp;        System.out.println(&quot;SampleTest&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ParameterizedTest(name = &quot;size_method_should_return_an_integer&quot;)
+&nbsp;    @CsvSource({
+&nbsp;            &quot;  1,  1&quot;,
+&nbsp;            &quot;  2,  2&quot;,
+&nbsp;            &quot; 16,  16&quot;,
+&nbsp;            &quot;  9,  9&quot;
+&nbsp;    })
+&nbsp;    public void size_method_should_return_an_integer(int val, int expectedResult) {
+<b class="fc">&nbsp;        sea = new Sea(val);</b>
+<b class="fc">&nbsp;        int actualResult = sea.size();</b>
+<b class="fc">&nbsp;        Assertions.assertEquals(actualResult, expectedResult);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-10-12 13:30</div>
+</div>
+</body>
+</html>
