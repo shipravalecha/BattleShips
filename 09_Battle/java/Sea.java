@@ -57,4 +57,9 @@ class Sea {
 
         return y*size + x;
     }
+
+    // Created public method to call private method for testing purposes
+    public int indexCopy(int x, int y) {
+        return index(x, y);
+    }
 }
