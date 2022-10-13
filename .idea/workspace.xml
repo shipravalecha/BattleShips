@@ -4,18 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c127946-980c-4856-97b9-67b1502ccaee" name="Changes" comment="Update SDK on workspace.xml" />
+    <list default="true" id="8c127946-980c-4856-97b9-67b1502ccaee" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="master" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="2G3fKOE84AH7cswjCMf0gxIMhgl" />
@@ -36,11 +31,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gant" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RunManager" selected="JUnit.SeaTest">
-    <configuration name="SeaTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+    <configuration name="SeaTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="BattleShips" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="SeaTest" />
@@ -61,6 +56,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.SeaTest" />
+        <item itemvalue="JUnit.SeaTest.Size_Method_Should_Return_True" />
         <item itemvalue="JUnit.SeaTest.Size_Method_Should_Return_True" />
       </list>
     </recent_temporary>
@@ -74,14 +71,6 @@
       <option name="presentableId" value="Default" />
       <updated>1665622124878</updated>
     </task>
-    <task id="LOCAL-00001" summary="Update SDK on workspace.xml">
-      <created>1665692773189</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1665692773189</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -95,10 +84,6 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update SDK on workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update SDK on workspace.xml" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
