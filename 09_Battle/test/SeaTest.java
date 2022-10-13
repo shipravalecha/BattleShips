@@ -9,6 +9,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SeaTest {
     Sea sea;
+
+    // Test to validate the value returned by size method
     @ParameterizedTest(name = "Size_Method_Should_Return_True")
     @CsvSource({
             "10, 10",
@@ -22,6 +24,7 @@ public class SeaTest {
         Assertions.assertEquals(actualResult, expectedResult);
     }
 
+    // Positive test to validate the length of an array
     @ParameterizedTest(name = "Test_Check_If_ArrayLength_Is_Correct")
     @CsvSource({
             "10, 100",
@@ -32,6 +35,7 @@ public class SeaTest {
         Assertions.assertEquals(sea.getArray().length, expectedResult);
     }
 
+    // Negative test to validate the length of an array
     @ParameterizedTest(name = "Test_Check_If_ArrayLength_Is_InCorrect")
     @CsvSource({
             "10, 101",
@@ -42,13 +46,13 @@ public class SeaTest {
         Assertions.assertNotEquals(sea.getArray().length, expectedResult);
     }
 
+    // Test for index method to check for Exceptions for x coordinate
     @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_XNegativeValues")
     @CsvSource({
             "-1, 1, Program error: x cannot be -1",
             "-2, 2, Program error: x cannot be -2",
             "-3, 3, Program error: x cannot be -3"
     })
-//    @CsvSource({"-7,1", "8,-2", "-3,-3"})
     public void IndexMethod_ArrayIndexOutOfBoundsException_For_XNegativeValues(int x, int y) {
         sea = new Sea(10);
         ArrayIndexOutOfBoundsException exception = Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
@@ -57,6 +61,7 @@ public class SeaTest {
         Assertions.assertEquals("Program error: x cannot be " + x, exception.getMessage());
     }
 
+    // Test for index method to check for Exceptions for y coordinate
     @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_YNegativeValues")
     @CsvSource({
             "1, -1, Program error: y cannot be -1",
@@ -71,6 +76,7 @@ public class SeaTest {
         Assertions.assertEquals("Program error: y cannot be " + y, exception.getMessage());
     }
 
+    // Test for index method to check for Exceptions for greater than size values
     @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_GreaterThanSizeValues")
     @CsvSource({"11,7", "1,90", "20,6"})
     public void IndexMethod_ArrayIndexOutOfBoundsException_For_GreaterThanSizeValues(int x, int y) {
@@ -80,6 +86,7 @@ public class SeaTest {
         });
     }
 
+    // Test for index method to check for valid values
     @ParameterizedTest(name = "IndexMethod_ReturnValue_For_ValidValues")
     @CsvSource({"1,7,71", "1,3,31", "2,5,52"})
     public void IndexMethod_ReturnValue_For_ValidValues(int x, int y, int expectedResult) {
@@ -88,24 +95,13 @@ public class SeaTest {
         Assertions.assertEquals(actualResult, expectedResult);
     }
 
+    // Test for get and set methods to check if values are correct in array
     @ParameterizedTest(name = "Test_Should_Return_True_If_Value_In_Array_Matches")
     @CsvSource({"1,7,5", "1,3,5", "2,5,5"})
-    public void Test_Should_Return_True_If_Value_In_Array_Matches(int x, int y, int value) {
+    public void Test_Should_Return_True_If_Value_In_Array_Matches(int x, int y, int expectedResult) {
         sea = new Sea(10);
-        int index = sea.indexCopy(x,y);
-        sea.set(x,y,value);
-        int[] arr = sea.getArray();
-        Assertions.assertTrue((arr[index] == value));
+        sea.set(x,y,expectedResult);
+        int actualResult = sea.get(x, y);
+        Assertions.assertTrue(actualResult == expectedResult);
     }
-
-    @ParameterizedTest(name = "GetMethod_Should_Return_Value_Test_True_If_Value_Matches")
-    @CsvSource({"1,7,5", "1,3,5", "2,5,5"})
-    public void GetMethod_Should_Return_Value_Test_True_If_Value_Matches(int x, int y, int value) {
-        sea = new Sea(10);
-        int index = sea.indexCopy(x,y);
-        sea.set(x,y,value);
-        int actualResult = sea.get(x,y);
-        Assertions.assertTrue((actualResult == value));
-    }
-
 }

@@ -1,0 +1,273 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Ship</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: Ship (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Ship</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/65)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Collections;
+&nbsp;import java.util.Comparator;
+&nbsp;import java.util.Random;
+&nbsp;import java.util.function.Predicate;
+&nbsp;
+&nbsp;/** A single ship, with its position and where it has been hit */
+&nbsp;class Ship {
+&nbsp;    // These are the four directions that ships can be in
+&nbsp;    public static final int ORIENT_E=0;   // goes East from starting position
+&nbsp;    public static final int ORIENT_SE=1;  // goes SouthEast from starting position
+&nbsp;    public static final int ORIENT_S=2;   // goes South from starting position
+&nbsp;    public static final int ORIENT_SW=3;  // goes SouthWest from starting position
+&nbsp;
+&nbsp;    private int id;                   // ship number
+&nbsp;    private int size;                 // how many tiles it occupies
+&nbsp;    private boolean placed;           // whether this ship is in the sea yet
+&nbsp;    private boolean sunk;             // whether this ship has been sunk
+&nbsp;    private ArrayList&lt;Boolean&gt; hits;  // which tiles of the ship have been hit
+&nbsp;
+&nbsp;    private int startX;               // starting position coordinates
+&nbsp;    private int startY;
+&nbsp;    private int orientX;              // x and y deltas from each tile occupied to the next
+&nbsp;    private int orientY;
+&nbsp;
+<b class="nc">&nbsp;    public Ship(int i, int sz) {</b>
+<b class="nc">&nbsp;        id = i; size = sz;</b>
+<b class="nc">&nbsp;        sunk = false; placed = false;</b>
+<b class="nc">&nbsp;        hits = new ArrayList&lt;&gt;(Collections.nCopies(size, false));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /** @returns the ship number */
+<b class="nc">&nbsp;    public int id() { return id; }</b>
+&nbsp;    /** @returns the ship size */
+<b class="nc">&nbsp;    public int size() { return size; }</b>
+&nbsp;
+&nbsp;    /* record the ship as having been hit at the given coordinates */
+&nbsp;    public void hit(int x, int y) {
+&nbsp;        // need to work out how many tiles from the ship&#39;s starting position the hit is at
+&nbsp;        // that can be worked out from the difference between the starting X coord and this one
+&nbsp;        // unless the ship runs N-S, in which case use the Y coord instead
+&nbsp;        int offset;
+<b class="nc">&nbsp;        if (orientX != 0) {</b>
+<b class="nc">&nbsp;            offset = (x - startX) / orientX;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            offset = (y - startY) / orientY;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        hits.set(offset, true);</b>
+&nbsp;
+&nbsp;        // if every tile of the ship has been hit, the ship is sunk
+<b class="nc">&nbsp;        sunk = hits.stream().allMatch(Predicate.isEqual(true));</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public boolean isSunk() { return sunk; }</b>
+&nbsp;
+&nbsp;    // whether the ship has already been hit at the given coordinates
+&nbsp;    public boolean wasHit(int x, int y) {
+&nbsp;        int offset;
+<b class="nc">&nbsp;        if (orientX != 0) {</b>
+<b class="nc">&nbsp;            offset = (x - startX) / orientX;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            offset = (y - startY) / orientY;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return hits.get(offset);</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    // Place the ship in the sea.
+&nbsp;    // choose a random starting position, and a random direction
+&nbsp;    // if that doesn&#39;t fit, keep picking different positions and directions
+&nbsp;    public void placeRandom(Sea s) {
+<b class="nc">&nbsp;        Random random = new Random();</b>
+<b class="nc">&nbsp;        for (int tries = 0 ; tries &lt; 1000 ; ++tries) {</b>
+<b class="nc">&nbsp;            int x = random.nextInt(s.size());</b>
+<b class="nc">&nbsp;            int y = random.nextInt(s.size());</b>
+<b class="nc">&nbsp;            int orient = random.nextInt(4);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (place(s, x, y, orient)) return;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        throw new RuntimeException(&quot;Could not place any more ships&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Attempt to fit the ship into the sea, starting from a given position and
+&nbsp;    // in a given direction
+&nbsp;    // This is by far the most complicated part of the program.
+&nbsp;    // It will start at the position provided, and attempt to occupy tiles in the
+&nbsp;    // requested direction. If it does not fit, either because of the edge of the
+&nbsp;    // sea, or because of ships already in place, it will try to extend the ship
+&nbsp;    // in the opposite direction instead. If that is not possible, it fails.
+&nbsp;    public boolean place(Sea s, int x, int y, int orient) {
+<b class="nc">&nbsp;        if (placed) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Program error - placed ship &quot; + id + &quot; twice&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        switch(orient) {</b>
+&nbsp;        case ORIENT_E:                 // east is increasing X coordinate
+<b class="nc">&nbsp;            orientX = 1; orientY = 0;</b>
+<b class="nc">&nbsp;            break;</b>
+&nbsp;        case ORIENT_SE:                // southeast is increasing X and Y
+<b class="nc">&nbsp;            orientX = 1; orientY = 1;</b>
+<b class="nc">&nbsp;            break;</b>
+&nbsp;        case ORIENT_S:                 // south is increasing Y
+<b class="nc">&nbsp;            orientX = 0; orientY = 1;</b>
+<b class="nc">&nbsp;            break;</b>
+&nbsp;        case ORIENT_SW:                // southwest is increasing Y but decreasing X
+<b class="nc">&nbsp;            orientX = -1; orientY = 1;</b>
+<b class="nc">&nbsp;            break;</b>
+&nbsp;        default:
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Invalid orientation &quot; + orient);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (!s.isEmpty(x, y)) return false; // starting position is occupied - placing fails</b>
+&nbsp;
+<b class="nc">&nbsp;        startX = x; startY = y;</b>
+<b class="nc">&nbsp;        int tilesPlaced = 1;</b>
+<b class="nc">&nbsp;        int nextX = startX;</b>
+<b class="nc">&nbsp;        int nextY = startY;</b>
+<b class="nc">&nbsp;        while (tilesPlaced &lt; size) {</b>
+<b class="nc">&nbsp;            if (extendShip(s, nextX, nextY, nextX + orientX, nextY + orientY)) {</b>
+&nbsp;                // It is clear to extend the ship forwards
+<b class="nc">&nbsp;                tilesPlaced += 1;</b>
+<b class="nc">&nbsp;                nextX = nextX + orientX;</b>
+<b class="nc">&nbsp;                nextY = nextY + orientY;</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                int backX = startX - orientX;</b>
+<b class="nc">&nbsp;                int backY = startY - orientY;</b>
+&nbsp;
+<b class="nc">&nbsp;                if (extendShip(s, startX, startY, backX, backY)) {</b>
+&nbsp;                    // We can move the ship backwards, so it can be one tile longer
+<b class="nc">&nbsp;                    tilesPlaced +=1;</b>
+<b class="nc">&nbsp;                    startX = backX;</b>
+<b class="nc">&nbsp;                    startY = backY;</b>
+&nbsp;                } else {
+&nbsp;                    // Could not make it longer or move it backwards
+<b class="nc">&nbsp;                    return false;</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Mark in the sea which tiles this ship occupies
+<b class="nc">&nbsp;        for (int i = 0; i &lt; size; ++i) {</b>
+<b class="nc">&nbsp;            int sx = startX + i * orientX;</b>
+<b class="nc">&nbsp;            int sy = startY + i * orientY;</b>
+<b class="nc">&nbsp;            s.set(sx, sy, id);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        placed = true;</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Check whether a ship which already occupies the &quot;from&quot; coordinates,
+&nbsp;    // can also occupy the &quot;to&quot; coordinates.
+&nbsp;    // They must be within the sea area, empty, and not cause the ship to cross
+&nbsp;    // over another ship
+&nbsp;    private boolean extendShip(Sea s, int fromX, int fromY, int toX, int toY) {
+<b class="nc">&nbsp;        if (!s.isEmpty(toX, toY)) return false;                  // no space</b>
+<b class="nc">&nbsp;        if ((fromX == toX)||(fromY == toY)) return true;         // horizontal or vertical</b>
+&nbsp;
+&nbsp;        // we can extend the ship without colliding, but we are going diagonally
+&nbsp;        // and it should not be possible for two ships to cross each other on
+&nbsp;        // opposite diagonals.
+&nbsp;
+&nbsp;        // check the two tiles that would cross us here - if either is empty, we are OK
+&nbsp;        // if they both contain different ships, we are OK
+&nbsp;        // but if they both contain the same ship, we are crossing!
+<b class="nc">&nbsp;        int corner1 = s.get(fromX, toY);</b>
+<b class="nc">&nbsp;        int corner2 = s.get(toX, fromY);</b>
+<b class="nc">&nbsp;        if ((corner1 == 0) || (corner1 != corner2)) return true;</b>
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-10-12 17:53</div>
+</div>
+</body>
+</html>
