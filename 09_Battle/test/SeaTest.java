@@ -3,22 +3,19 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SeaTest {
     Sea sea;
 
     // Test to validate the value returned by size method
-    @ParameterizedTest(name = "Size_Method_Should_Return_True")
+    @ParameterizedTest(name = "Size_Method_Should_Return_Value")
     @CsvSource({
             "10, 10",
             "20, 20",
             "16, 16",
             "49, 49"
     })
-    public void Size_Method_Should_Return_True(int val, int expectedResult) {
+    public void Size_Method_Should_Return_Value(int val, int expectedResult) {
         sea = new Sea(val);
         int actualResult = sea.size();
         Assertions.assertEquals(actualResult, expectedResult);
@@ -47,13 +44,15 @@ public class SeaTest {
     }
 
     // Test for index method to check for Exceptions for x coordinate
-    @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_XNegativeValues")
+    // if these are negative or greater than size
+    @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_XValues")
     @CsvSource({
             "-1, 1, Program error: x cannot be -1",
             "-2, 2, Program error: x cannot be -2",
-            "-3, 3, Program error: x cannot be -3"
+            "-3, 3, Program error: x cannot be -3",
+            "11, 2, Program error: x cannot be 11"
     })
-    public void IndexMethod_ArrayIndexOutOfBoundsException_For_XNegativeValues(int x, int y) {
+    public void IndexMethod_ArrayIndexOutOfBoundsException_For_XValues(int x, int y) {
         sea = new Sea(10);
         ArrayIndexOutOfBoundsException exception = Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
             sea.indexCopy(x, y);
@@ -62,13 +61,15 @@ public class SeaTest {
     }
 
     // Test for index method to check for Exceptions for y coordinate
-    @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_YNegativeValues")
+    // if these are negative or greater than size
+    @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_YValues")
     @CsvSource({
             "1, -1, Program error: y cannot be -1",
             "2, -2, Program error: y cannot be -2",
-            "3, -3, Program error: y cannot be -3"
+            "3, -3, Program error: y cannot be -3",
+            "3, 11, Program error: y cannot be 11"
     })
-    public void IndexMethod_ArrayIndexOutOfBoundsException_For_YNegativeValues(int x, int y) {
+    public void IndexMethod_ArrayIndexOutOfBoundsException_For_YValues(int x, int y) {
         sea = new Sea(10);
         ArrayIndexOutOfBoundsException exception = Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
             sea.indexCopy(x, y);
@@ -76,15 +77,15 @@ public class SeaTest {
         Assertions.assertEquals("Program error: y cannot be " + y, exception.getMessage());
     }
 
-    // Test for index method to check for Exceptions for greater than size values
-    @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_GreaterThanSizeValues")
-    @CsvSource({"11,7", "1,90", "20,6"})
-    public void IndexMethod_ArrayIndexOutOfBoundsException_For_GreaterThanSizeValues(int x, int y) {
-        sea = new Sea(10);
-        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            sea.indexCopy(x, y);
-        });
-    }
+//    // Test for index method to check for Exceptions for greater than size values
+//    @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_GreaterThanSizeValues")
+//    @CsvSource({"11,7", "1,90", "20,6"})
+//    public void IndexMethod_ArrayIndexOutOfBoundsException_For_GreaterThanSizeValues(int x, int y) {
+//        sea = new Sea(10);
+//        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+//            sea.indexCopy(x, y);
+//        });
+//    }
 
     // Test for index method to check for valid values
     @ParameterizedTest(name = "IndexMethod_ReturnValue_For_ValidValues")
