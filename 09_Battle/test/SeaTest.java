@@ -138,6 +138,7 @@ public class SeaTest {
     @Test
     public void Test_Check_If_GetMethod_Returns_Zero_And_NotNull() {
         sea = new Sea(10);
+        Assertions.assertEquals(0, sea.get(1,1));
         Assertions.assertNotNull(sea.encodedDump());
     }
 

@@ -34,7 +34,7 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
-  <component name="RunManager" selected="JUnit.SeaTest">
+  <component name="RunManager" selected="JUnit.SeaTest.Test_Check_If_GetMethod_Returns_Zero_And_NotNull">
     <configuration name="SeaTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="BattleShips" />
       <option name="PACKAGE_NAME" value="" />
@@ -54,8 +54,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SeaTest.Test_Check_If_GetMethod_Returns_Zero_And_NotNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="BattleShips" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SeaTest" />
+      <option name="METHOD_NAME" value="Test_Check_If_GetMethod_Returns_Zero_And_NotNull" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.SeaTest.Test_Check_If_GetMethod_Returns_Zero_And_NotNull" />
         <item itemvalue="JUnit.SeaTest" />
         <item itemvalue="JUnit.SeaTest.Size_Method_Should_Return_True" />
         <item itemvalue="JUnit.SeaTest.Size_Method_Should_Return_True" />
