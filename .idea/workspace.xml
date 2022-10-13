@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c127946-980c-4856-97b9-67b1502ccaee" name="Changes" comment="" />
+    <list default="true" id="8c127946-980c-4856-97b9-67b1502ccaee" name="Changes" comment="Update Test_Check_If_GetMethod_Returns_Zero_And_NotNull">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/09_Battle/test/SeaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/09_Battle/test/SeaTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,6 +85,14 @@
       <option name="presentableId" value="Default" />
       <updated>1665622124878</updated>
     </task>
+    <task id="LOCAL-00001" summary="Update Test_Check_If_GetMethod_Returns_Zero_And_NotNull">
+      <created>1665693468507</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1665693468507</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -95,6 +106,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update Test_Check_If_GetMethod_Returns_Zero_And_NotNull" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Test_Check_If_GetMethod_Returns_Zero_And_NotNull" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
