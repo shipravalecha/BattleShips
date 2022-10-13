@@ -104,4 +104,47 @@ public class SeaTest {
         int actualResult = sea.get(x, y);
         Assertions.assertTrue(actualResult == expectedResult);
     }
+
+    // Test_To_Check_If_X_And_Y_isEmpty
+    @ParameterizedTest(name = "Test_To_Check_If_X_And_Y_isEmpty")
+    @CsvSource({
+            "-1, 1, False",
+            "-2, 2, False",
+            "1, -1, False",
+            "2, -2, False",
+            "11, 2, False",
+            "2, 11, False"
+    })
+    public void Test_To_Check_If_X_And_Y_isEmpty(int x, int y, boolean expectedResult) {
+        sea = new Sea(10);
+        boolean actualResult = sea.isEmpty(x, y);
+        Assertions.assertEquals(actualResult, expectedResult);
+    }
+
+    // Test_To_Check_If_GetMethod_Returns_Zero
+    @ParameterizedTest(name = "Test_Returns_True_If_GetMethod_Returns_Zero")
+    @CsvSource({
+            "1, 1, True",
+            "2, 2, True",
+            "4, 2, True"
+    })
+    public void Test_Returns_True_If_GetMethod_Returns_Zero(int x, int y, boolean expectedResult) {
+        sea = new Sea(10);
+        boolean actualResult = sea.isEmpty(x, y);
+        Assertions.assertEquals(actualResult, expectedResult);
+    }
+
+    // Test_Check_If_GetMethod_Returns_Zero_And_NotNull
+    @Test
+    public void Test_Check_If_GetMethod_Returns_Zero_And_NotNull() {
+        sea = new Sea(10);
+        Assertions.assertNotNull(sea.encodedDump());
+    }
+
+    // Test_Check_If_GetMethod_Returns_Empty_String
+    @Test
+    public void Test_Check_If_GetMethod_Returns_Empty_String() {
+        sea = new Sea(0);
+        Assertions.assertEquals(sea.encodedDump(), "");
+    }
 }
