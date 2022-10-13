@@ -54,7 +54,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (9/9)
+    (13/13)
   </span>
 </td>
 <td class="coverageStat">
@@ -62,7 +62,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (18/18)
+    (32/32)
   </span>
 </td>
 </tr>
@@ -81,27 +81,48 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import org.junit.jupiter.params.provider.CsvSource;
 &nbsp;import org.junit.jupiter.params.provider.ValueSource;
 &nbsp;
+&nbsp;import static org.hamcrest.MatcherAssert.assertThat;
+&nbsp;
 <b class="fc">&nbsp;public class SeaTest {</b>
 &nbsp;    Sea sea;
-&nbsp;
-&nbsp;    @ParameterizedTest(name = &quot;size_method_should_return_an_integer&quot;)
+&nbsp;    @ParameterizedTest(name = &quot;Size_Method_Should_Return_True&quot;)
 &nbsp;    @CsvSource({
 &nbsp;            &quot;10, 10&quot;,
 &nbsp;            &quot;20, 20&quot;,
 &nbsp;            &quot;16, 16&quot;,
 &nbsp;            &quot;49, 49&quot;
 &nbsp;    })
-&nbsp;    public void size_method_should_return_an_integer(int val, int expectedResult) {
+&nbsp;    public void Size_Method_Should_Return_True(int val, int expectedResult) {
 <b class="fc">&nbsp;        sea = new Sea(val);</b>
 <b class="fc">&nbsp;        int actualResult = sea.size();</b>
 <b class="fc">&nbsp;        Assertions.assertEquals(actualResult, expectedResult);</b>
 &nbsp;    }
 &nbsp;
+&nbsp;    @ParameterizedTest(name = &quot;Test_Check_If_ArrayLength_Is_Correct&quot;)
+&nbsp;    @CsvSource({
+&nbsp;            &quot;10, 100&quot;,
+&nbsp;            &quot;20, 400&quot;
+&nbsp;    })
+&nbsp;    public void Test_Check_If_ArrayLength_Is_Correct(int val, int expectedResult) {
+<b class="fc">&nbsp;        sea = new Sea(val);</b>
+<b class="fc">&nbsp;        Assertions.assertEquals(sea.getArray().length, expectedResult);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ParameterizedTest(name = &quot;Test_Check_If_ArrayLength_Is_InCorrect&quot;)
+&nbsp;    @CsvSource({
+&nbsp;            &quot;10, 101&quot;,
+&nbsp;            &quot;20, 401&quot;
+&nbsp;    })
+&nbsp;    public void Test_Check_If_ArrayLength_Is_InCorrect(int val, int expectedResult) {
+<b class="fc">&nbsp;        sea = new Sea(val);</b>
+<b class="fc">&nbsp;        Assertions.assertNotEquals(sea.getArray().length, expectedResult);</b>
+&nbsp;    }
+&nbsp;
 &nbsp;    @ParameterizedTest(name = &quot;IndexMethod_ArrayIndexOutOfBoundsException_For_XNegativeValues&quot;)
 &nbsp;    @CsvSource({
-&nbsp;            &quot;-1, 1&quot;,
-&nbsp;            &quot;-2, 2&quot;,
-&nbsp;            &quot;-3, 3&quot;
+&nbsp;            &quot;-1, 1, Program error: x cannot be -1&quot;,
+&nbsp;            &quot;-2, 2, Program error: x cannot be -2&quot;,
+&nbsp;            &quot;-3, 3, Program error: x cannot be -3&quot;
 &nbsp;    })
 &nbsp;//    @CsvSource({&quot;-7,1&quot;, &quot;8,-2&quot;, &quot;-3,-3&quot;})
 &nbsp;    public void IndexMethod_ArrayIndexOutOfBoundsException_For_XNegativeValues(int x, int y) {
@@ -114,9 +135,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    @ParameterizedTest(name = &quot;IndexMethod_ArrayIndexOutOfBoundsException_For_YNegativeValues&quot;)
 &nbsp;    @CsvSource({
-&nbsp;            &quot;1, -1&quot;,
-&nbsp;            &quot;2, -2&quot;,
-&nbsp;            &quot;3, -3&quot;
+&nbsp;            &quot;1, -1, Program error: y cannot be -1&quot;,
+&nbsp;            &quot;2, -2, Program error: y cannot be -2&quot;,
+&nbsp;            &quot;3, -3, Program error: y cannot be -3&quot;
 &nbsp;    })
 &nbsp;    public void IndexMethod_ArrayIndexOutOfBoundsException_For_YNegativeValues(int x, int y) {
 <b class="fc">&nbsp;        sea = new Sea(10);</b>
@@ -142,6 +163,27 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        int actualResult = sea.indexCopy(x, y);</b>
 <b class="fc">&nbsp;        Assertions.assertEquals(actualResult, expectedResult);</b>
 &nbsp;    }
+&nbsp;
+&nbsp;    @ParameterizedTest(name = &quot;Test_Should_Return_True_If_Value_In_Array_Matches&quot;)
+&nbsp;    @CsvSource({&quot;1,7,5&quot;, &quot;1,3,5&quot;, &quot;2,5,5&quot;})
+&nbsp;    public void Test_Should_Return_True_If_Value_In_Array_Matches(int x, int y, int value) {
+<b class="fc">&nbsp;        sea = new Sea(10);</b>
+<b class="fc">&nbsp;        int index = sea.indexCopy(x,y);</b>
+<b class="fc">&nbsp;        sea.set(x,y,value);</b>
+<b class="fc">&nbsp;        int[] arr = sea.getArray();</b>
+<b class="fc">&nbsp;        Assertions.assertTrue((arr[index] == value));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ParameterizedTest(name = &quot;GetMethod_Should_Return_Value_Test_True_If_Value_Matches&quot;)
+&nbsp;    @CsvSource({&quot;1,7,5&quot;, &quot;1,3,5&quot;, &quot;2,5,5&quot;})
+&nbsp;    public void GetMethod_Should_Return_Value_Test_True_If_Value_Matches(int x, int y, int value) {
+<b class="fc">&nbsp;        sea = new Sea(10);</b>
+<b class="fc">&nbsp;        int index = sea.indexCopy(x,y);</b>
+<b class="fc">&nbsp;        sea.set(x,y,value);</b>
+<b class="fc">&nbsp;        int actualResult = sea.get(x,y);</b>
+<b class="fc">&nbsp;        Assertions.assertTrue((actualResult == value));</b>
+&nbsp;    }
+&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -166,7 +208,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-10-12 15:10</div>
+    <div style="float:right;">generated on 2022-10-12 16:52</div>
 </div>
 </body>
 </html>
