@@ -13,7 +13,6 @@ public class Input {
     private int scale;             // size of the sea, needed to validate input
     private boolean isQuit;        // whether the input has ended
     private int[] coords;          // the last coordinates read
-
     private InputStream in;
     public Input(int seaSize, InputStream in){
         scale = seaSize;

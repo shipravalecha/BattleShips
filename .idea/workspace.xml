@@ -22,7 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c127946-980c-4856-97b9-67b1502ccaee" name="Changes" comment="">
+    <list default="true" id="8c127946-980c-4856-97b9-67b1502ccaee" name="Changes" comment="Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/09_Battle/java/Input.java" beforeDir="false" afterPath="$PROJECT_DIR$/09_Battle/java/Input.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/09_Battle/test/InputTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/09_Battle/test/InputTest.java" afterDir="false" />
@@ -68,7 +68,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.InputTest.MockTest">
+  <component name="RunManager" selected="JUnit.InputTest">
     <configuration name="Battle" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Battle" />
       <module name="BattleShips" />
@@ -117,9 +117,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.InputTest" />
         <item itemvalue="JUnit.InputTest.MockTest" />
         <item itemvalue="Application.Battle" />
-        <item itemvalue="JUnit.InputTest" />
         <item itemvalue="JUnit.InputTest.x_Should_return_6" />
         <item itemvalue="JUnit.InputTest.Input_Takes_Any_Integer_On_Creation" />
       </list>
@@ -134,6 +134,14 @@
       <option name="presentableId" value="Default" />
       <updated>1665622124878</updated>
     </task>
+    <task id="LOCAL-00001" summary="Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later...">
+      <created>1668420733286</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1668420733286</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -147,6 +155,10 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later..." />
+  </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
@@ -154,6 +166,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/BattleShips$InputTest_Input_Takes_Any_Integer_On_Creation.ic" NAME="InputTest.Input_Takes_Any_Integer_On_Creation Coverage Results" MODIFIED="1668313529239" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/BattleShips$SeaTest.ic" NAME="SeaTest Coverage Results" MODIFIED="1665691949982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/BattleShips$InputTest_MockTest.ic" NAME="InputTest.MockTest Coverage Results" MODIFIED="1668420630765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/BattleShips$InputTest.ic" NAME="InputTest Coverage Results" MODIFIED="1668420846714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/BattleShips$InputTest_MockTest.ic" NAME="InputTest.MockTest Coverage Results" MODIFIED="1668420840015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

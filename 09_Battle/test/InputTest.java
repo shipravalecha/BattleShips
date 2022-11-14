@@ -29,13 +29,13 @@ public class InputTest {
 
     @Test
     public void MockTest() throws IOException {
-        String data = "1,1";
+        String data = "";
         ByteArrayInputStream fakeIS = new ByteArrayInputStream(data.getBytes());
         input = new Input(4, fakeIS);
 
         boolean x = input.readCoordinates();
 
-        Assertions.assertEquals(true, x);
+        Assertions.assertEquals(false, x);
 
     }
 }
