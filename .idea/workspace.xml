@@ -23,9 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c127946-980c-4856-97b9-67b1502ccaee" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/09_Battle/java/Input.java" beforeDir="false" afterPath="$PROJECT_DIR$/09_Battle/java/Input.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/09_Battle/test/InputTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/09_Battle/test/InputTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +68,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Battle">
+  <component name="RunManager" selected="JUnit.InputTest.MockTest">
     <configuration name="Battle" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Battle" />
       <module name="BattleShips" />
@@ -96,11 +95,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InputTest.Valid_seaSize_On_Input_Creation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="InputTest.MockTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="BattleShips" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="InputTest" />
-      <option name="METHOD_NAME" value="Valid_seaSize_On_Input_Creation(int)" />
+      <option name="METHOD_NAME" value="MockTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -118,11 +117,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.InputTest.MockTest" />
         <item itemvalue="Application.Battle" />
         <item itemvalue="JUnit.InputTest" />
         <item itemvalue="JUnit.InputTest.x_Should_return_6" />
         <item itemvalue="JUnit.InputTest.Input_Takes_Any_Integer_On_Creation" />
-        <item itemvalue="JUnit.InputTest.Valid_seaSize_On_Input_Creation" />
       </list>
     </recent_temporary>
   </component>
@@ -155,5 +154,6 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/BattleShips$InputTest_Input_Takes_Any_Integer_On_Creation.ic" NAME="InputTest.Input_Takes_Any_Integer_On_Creation Coverage Results" MODIFIED="1668313529239" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/BattleShips$SeaTest.ic" NAME="SeaTest Coverage Results" MODIFIED="1665691949982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/BattleShips$InputTest_MockTest.ic" NAME="InputTest.MockTest Coverage Results" MODIFIED="1668420630765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

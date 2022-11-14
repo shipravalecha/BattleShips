@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -13,13 +14,20 @@ public class Input {
     private boolean isQuit;        // whether the input has ended
     private int[] coords;          // the last coordinates read
 
+    private InputStream in;
+    public Input(int seaSize, InputStream in){
+        scale = seaSize;
+        this.in = in;
+        parser = NumberFormat.getIntegerInstance();
+    }
     public Input(int seaSize) {
         scale = seaSize;
-        reader = new BufferedReader(new InputStreamReader(System.in));
+        in = System.in;
         parser = NumberFormat.getIntegerInstance();
     }
 
     public boolean readCoordinates() throws IOException {
+        reader = new BufferedReader(new InputStreamReader(in));
         while (true) {
             // Write a prompt
             System.out.print("\nTarget x,y\n> ");
