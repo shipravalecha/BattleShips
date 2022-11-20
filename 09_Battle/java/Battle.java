@@ -1,3 +1,5 @@
+import lombok.Getter;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +11,7 @@ import java.text.NumberFormat;
 
 
 /* This class holds the game state and the game logic */
+@Getter
 public class Battle {
 
     /* parameters of the game */
