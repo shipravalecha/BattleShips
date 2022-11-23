@@ -1,0 +1,324 @@
+Index: 09_Battle/test/BattleTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import org.junit.jupiter.api.Assertions;\r\nimport org.junit.jupiter.api.Test;\r\nimport org.junit.jupiter.params.ParameterizedTest;\r\nimport org.junit.jupiter.params.converter.ConvertWith;\r\nimport org.junit.jupiter.params.provider.CsvSource;\r\n\r\nimport java.io.ByteArrayInputStream;\r\nimport java.io.InputStream;\r\nimport java.nio.charset.StandardCharsets;\r\nimport java.util.Scanner;\r\n\r\nimport static org.junit.jupiter.api.Assertions.assertThrows;\r\n\r\npublic class BattleTest {\r\n    Battle battle;\r\n    // Test Battle to validate the seaSize. SeaSize Values lower than 4 throws exception\r\n    @ParameterizedTest(name = \"Battle_Sea_Size_Invalid_values\")\r\n    @CsvSource({\r\n            \"-1\",\r\n            \"0\",\r\n            \"1\",\r\n            \"3\"\r\n    })\r\n    public void Test_Battle_With_Invalid_Sea_Size_Values(int seaSize ) {\r\n        int[] shipSizes = new int[3];\r\n        int[] shipCounts = new int[3];\r\n\r\n        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {\r\n            new Battle(seaSize, shipSizes, shipCounts);\r\n        });\r\n        String expectedErrorMessage = String.format(\"Sea Size %s invalid, must be at least 4\", seaSize);\r\n        Assertions.assertEquals(expectedErrorMessage, exception.getMessage());\r\n    }\r\n\r\n    // Test Battle to validate the ship size. Ship Size Values should be lower than SeaSize.\r\n    @ParameterizedTest(name = \"Battle_Ship_Size_Invalid_values\")\r\n    @CsvSource(value = {\r\n            \"4;10,3,4\", \"4;0\"}, delimiterString = \";\")\r\n    public void Test_Battle_With_Invalid_Ship_Size_Values(int seaSize, @ConvertWith(IntArrayConverter.class) int[] shipSizes) {\r\n\r\n        int[] shipCounts = new int[] { 2, 2, 2 };\r\n\r\n        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {\r\n            new Battle(seaSize, shipSizes, shipCounts);\r\n        });\r\n        String expectedErrorMessage = String.format(\"Ship has invalid size %s\",shipSizes[0]);\r\n        Assertions.assertEquals(expectedErrorMessage, exception.getMessage());\r\n    }\r\n\r\n    // Test Battle to validate the ship count. Ship count should equal to Ship Size count.\r\n    @ParameterizedTest(name = \"Battle_Ship_Count_Invalid_values\")\r\n    @CsvSource(value = {\r\n            \"4;1,3,4;1\", \"4;1;2,2\"}, delimiterString = \";\")\r\n\r\n    public void Test_Battle_With_Invalid_Ship_Count_Values(int seaSize, @ConvertWith(IntArrayConverter.class) int[] shipSizes, @ConvertWith(IntArrayConverter.class) int[] shipCounts) {\r\n\r\n\r\n        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {\r\n            new Battle(seaSize, shipSizes, shipCounts);\r\n        });\r\n        Assertions.assertEquals(\"Ship counts must match\", exception.getMessage());\r\n    }\r\n\r\n    // Test Battle to validate the ship count. Ship count should equal to Ship Size count.\r\n    @ParameterizedTest(name = \"Battle_Ship_Count_Invalid_values\")\r\n    @CsvSource(value = {\r\n            \"6;1,3,4;1,1,1\", \"4;1,1;1,1\"}, delimiterString = \";\")\r\n    public void Test_Battle_With_Valid_Values(int seaSize, @ConvertWith(IntArrayConverter.class) int[] shipSizes, @ConvertWith(IntArrayConverter.class) int[] shipCounts) {\r\n\r\n        battle= new Battle(seaSize, shipSizes, shipCounts);\r\n        Assertions.assertEquals(seaSize, battle.getSeaSize());\r\n        Assertions.assertEquals(shipSizes.length, battle.getSizes().length);\r\n        Assertions.assertEquals(shipCounts.length, battle.getCounts().length);\r\n        Assertions.assertEquals(seaSize, battle.getSea().size());\r\n    }\r\n    // Test Battle to validate the ship count. Ship count should equal to Ship Size count.\r\n    @ParameterizedTest(name = \"Battle_Ship_Count_Invalid_values\")\r\n    @CsvSource(value = {\r\n            \"6;2,3,4;2,2,2\"}, delimiterString = \";\")\r\n    public void Test_Battle_Play_Valid_Values(int seaSize, @ConvertWith(IntArrayConverter.class) int[] shipSizes, @ConvertWith(IntArrayConverter.class) int[] shipCounts) {\r\n\r\n        battle= new Battle(seaSize, shipSizes, shipCounts);\r\n        String input=\"\";\r\n        for(int i=1;i<seaSize;i++){\r\n            for(int j=1;j<seaSize;j++){\r\n                input += \"\"+i+\",\"+j+ System.getProperty(\"line.separator\");\r\n            }\r\n        }\r\n        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));\r\n        battle.play();\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/09_Battle/test/BattleTest.java b/09_Battle/test/BattleTest.java
+--- a/09_Battle/test/BattleTest.java	(revision c363800020dad04a85047a98ec77aa3badb4814a)
++++ b/09_Battle/test/BattleTest.java	(date 1669087057509)
+@@ -89,5 +89,13 @@
+         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+         battle.play();
+     }
++
++    @Test
++    public void Hitting_Valid_Tile_Should_Increase_Hit() {
++        int[] shipCount = {1, 1, 1, 1};
++        int[] shipSize = {4, 4, 4, 4};
++        battle = new Battle(4, shipSize, shipCount);
++        battle.play();
++    }
+ }
+ 
+Index: 09_Battle/test/InputTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import org.junit.Rule;\r\nimport org.junit.jupiter.api.Assertions;\r\nimport org.junit.jupiter.api.Test;\r\nimport org.junit.jupiter.params.ParameterizedTest;\r\nimport org.junit.jupiter.params.provider.CsvSource;\r\nimport org.junit.rules.ExpectedException;\r\n\r\nimport java.io.*;\r\nimport java.text.NumberFormat;\r\n\r\npublic class InputTest {\r\n    Input input;\r\n\r\n    @Rule\r\n    public ExpectedException thrown = ExpectedException.none();\r\n\r\n    // Test to validate Input is created\r\n    @ParameterizedTest(name = \"Input_Takes_Any_Integer_On_Creation\")\r\n    @CsvSource({\r\n            \"-1\",\r\n            \"0\",\r\n            \"16\",\r\n            \"49\"\r\n    })\r\n    public void Input_Takes_Any_Integer_On_Creation(int val) {\r\n        input = new Input(val);\r\n        Assertions.assertNotNull(input);\r\n    }\r\n\r\n    @Test\r\n    public void readCoordinates_Null_Or_Empty_String_Should_Return_False() throws IOException {\r\n        String data = \"\";\r\n        ByteArrayInputStream fakeIS = new ByteArrayInputStream(data.getBytes());\r\n        input = new Input(4, fakeIS);\r\n\r\n        boolean x = input.readCoordinates();\r\n\r\n        Assertions.assertEquals(false, x);\r\n    }\r\n\r\n    @ParameterizedTest(name = \"readCoordinates_Valid_String_Should_Return_True\")\r\n    @CsvSource({\r\n            \"1,1\",\r\n            \"2,2\",\r\n            \"3,3\",\r\n            \"4,4\"\r\n    })\r\n    public void readCoordinates_Valid_String_Should_Return_True(String data, String data1) throws IOException {\r\n        String foo = data + \",\" + data1;\r\n        ByteArrayInputStream fakeIS = new ByteArrayInputStream(foo.getBytes());\r\n        input = new Input(4, fakeIS);\r\n\r\n        boolean x = input.readCoordinates();\r\n\r\n        Assertions.assertTrue(x);\r\n    }\r\n\r\n    @ParameterizedTest(name = \"readCoordinates_String_Length_Not_2_Returns_False\")\r\n    @CsvSource({\r\n            \"1,1,1\",\r\n            \"2,2,2\",\r\n            \"3,3,3\",\r\n            \"4,4,4\"\r\n    })\r\n    public void readCoordinates_String_Length_Not_2_Returns_False(String data, String data1, String data2) throws IOException {\r\n        String foo = data + \",\" + data1 + \",\" + data2;\r\n        ByteArrayInputStream fakeIS = new ByteArrayInputStream(foo.getBytes());\r\n        input = new Input(4, fakeIS);\r\n\r\n        boolean x = input.readCoordinates();\r\n\r\n        Assertions.assertFalse(x);\r\n    }\r\n\r\n    @ParameterizedTest(name = \"readCoordinates_Values_Out_Of_Range_Returns_False\")\r\n    @CsvSource({\r\n            \"-1,-1\",\r\n            \"5,5\",\r\n            \"0,0\",\r\n    })\r\n    public void readCoordinates_Values_Out_Of_Range_Returns_False(String data, String data1) throws IOException {\r\n        String foo = data + \",\" + data1;\r\n        ByteArrayInputStream fakeIS = new ByteArrayInputStream(foo.getBytes());\r\n        input = new Input(4, fakeIS);\r\n\r\n        boolean x = input.readCoordinates();\r\n\r\n        Assertions.assertFalse(x);\r\n    }\r\n\r\n    @ParameterizedTest(name = \"readCoordinates_Valid_String_Should_Return_True\")\r\n    @CsvSource({\r\n            \"a,b\",\r\n            \"c,d\",\r\n            \"!,@\",\r\n    })\r\n    public void readCoordinates_Non_Int_Values_Throw_Exception(String data, String data1) throws IOException, NumberFormatException {\r\n        String foo = data + \",\" + data1;\r\n        ByteArrayInputStream fakeIS = new ByteArrayInputStream(foo.getBytes());\r\n        input = new Input(4, fakeIS);\r\n\r\n        boolean x = input.readCoordinates();\r\n        thrown.expect(NumberFormatException.class);\r\n    }\r\n\r\n    @ParameterizedTest(name = \"x_should_return_x\")\r\n    @CsvSource({\r\n            \"1,1\",\r\n            \"2,2\",\r\n            \"3,3\",\r\n            \"4,4\"\r\n    })\r\n    public void x_should_return_x(String data, String data1) throws IOException {\r\n        String foo = data + \",\" + data1;\r\n        ByteArrayInputStream fakeIS = new ByteArrayInputStream(foo.getBytes());\r\n        input = new Input(4, fakeIS);\r\n\r\n        boolean garb = input.readCoordinates();\r\n        String output = Integer.toString(input.x());\r\n        Assertions.assertEquals(data, output);\r\n    }\r\n\r\n    @ParameterizedTest(name = \"y_should_return_y\")\r\n    @CsvSource({\r\n            \"1,1\",\r\n            \"2,2\",\r\n            \"3,3\",\r\n            \"4,4\"\r\n    })\r\n    public void y_should_return_y(String data, String data1) throws IOException {\r\n        String foo = data + \",\" + data1;\r\n        ByteArrayInputStream fakeIS = new ByteArrayInputStream(foo.getBytes());\r\n        input = new Input(4, fakeIS);\r\n\r\n        boolean garb = input.readCoordinates();\r\n        String output = Integer.toString(input.y());\r\n        Assertions.assertEquals(data, output);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/09_Battle/test/InputTest.java b/09_Battle/test/InputTest.java
+--- a/09_Battle/test/InputTest.java	(revision c363800020dad04a85047a98ec77aa3badb4814a)
++++ b/09_Battle/test/InputTest.java	(date 1669084800829)
+@@ -4,9 +4,7 @@
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.CsvSource;
+ import org.junit.rules.ExpectedException;
+-
+ import java.io.*;
+-import java.text.NumberFormat;
+ 
+ public class InputTest {
+     Input input;
+Index: 09_Battle/java/Battle.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import lombok.Getter;\r\n\r\nimport java.io.IOException;\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.Collections;\r\nimport java.util.Comparator;\r\nimport java.util.Random;\r\nimport java.util.function.Predicate;\r\nimport java.text.NumberFormat;\r\n\r\n\r\n/* This class holds the game state and the game logic */\r\n@Getter\r\npublic class Battle {\r\n\r\n    /* parameters of the game */\r\n    private int seaSize;\r\n    private int[] sizes;\r\n    private int[] counts;\r\n\r\n    /* The game setup - the ships and the sea */\r\n    private ArrayList<Ship> ships;\r\n    private Sea sea;\r\n\r\n    /* game state counts */\r\n    private int[] losses;    // how many of each type of ship have been sunk\r\n    private int hits;        // how many hits the player has made\r\n    private int misses;      // how many misses the player has made\r\n\r\n    // Names of ships of each size. The game as written has ships of size 3, 4 and 5 but\r\n    // can easily be modified. It makes no sense to have a ship of size zero though.\r\n    private static String NAMES_BY_SIZE[] = {\r\n        \"error\",\r\n        \"size1\",\r\n        \"destroyer\",\r\n        \"cruiser\",\r\n        \"aircraft carrier\",\r\n        \"size5\" };\r\n\r\n    // Entrypoint\r\n    public static void main(String args[]) {\r\n        Battle game = new Battle(6,                        // Sea is 6 x 6 tiles\r\n                                 new int[] { 2, 3, 4 },    // Ships are of sizes 2, 3, and 4\r\n                                 new int[] { 2, 2, 2 });   // there are two ships of each size\r\n        game.play();\r\n    }\r\n\r\n    public Battle(int scale, int[] shipSizes, int[] shipCounts) {\r\n        seaSize = scale;\r\n        sizes = shipSizes;\r\n        counts = shipCounts;\r\n\r\n        // validate parameters\r\n        if (seaSize < 4) throw new RuntimeException(\"Sea Size \" + seaSize + \" invalid, must be at least 4\");\r\n\r\n        for (int sz : sizes) {\r\n            if ((sz < 1) || (sz > seaSize))\r\n                throw new RuntimeException(\"Ship has invalid size \" + sz);\r\n        }\r\n\r\n        if (counts.length != sizes.length) {\r\n            throw new RuntimeException(\"Ship counts must match\");\r\n        }\r\n\r\n        // Initialize game state\r\n        sea = new Sea(seaSize);          // holds what ship if any occupies each tile\r\n        ships = new ArrayList<Ship>();   // positions and states of all the ships\r\n        losses = new int[counts.length]; // how many ships of each type have been sunk\r\n\r\n        // Build up the list of all the ships\r\n        int shipNumber = 1;\r\n        for (int type = 0; type < counts.length; ++type) {\r\n            for (int i = 0; i < counts[i]; ++i) {\r\n                ships.add(new Ship(shipNumber++, sizes[type]));\r\n            }\r\n        }\r\n\r\n        // When we put the ships in the sea, we put the biggest ones in first, or they might\r\n        // not fit\r\n        ArrayList<Ship> largestFirst = new ArrayList<>(ships);\r\n        Collections.sort(largestFirst, Comparator.comparingInt((Ship ship) -> ship.size()).reversed());\r\n\r\n        // place each ship into the sea\r\n        for (Ship ship : largestFirst) {\r\n            ship.placeRandom(sea);\r\n        }\r\n    }\r\n\r\n    public void play() {\r\n        System.out.println(\"The following code of the bad guys' fleet disposition\\nhas been captured but not decoded:\\n\");\r\n        System.out.println(sea.encodedDump());\r\n        System.out.println(\"De-code it and use it if you can\\nbut keep the de-coding method a secret.\\n\");\r\n\r\n        int lost = 0;\r\n        System.out.println(\"Start game\");\r\n        Input input = new Input(seaSize);\r\n        try {\r\n            while (lost < ships.size()) {          // the game continues while some ships remain unsunk\r\n                if (! input.readCoordinates()) {   // ... unless there is no more input from the user\r\n                    return;\r\n                }\r\n\r\n                // The computer thinks of the sea as a grid of rows, from top to bottom.\r\n                // However, the user will use X and Y coordinates, with Y going bottom to top\r\n                int row = seaSize - input.y();\r\n                int col = input.x() - 1;\r\n\r\n                if (sea.isEmpty(col, row)) {\r\n                    ++misses;\r\n                    System.out.println(\"Splash!  Try again.\");\r\n                } else {\r\n                    Ship ship = ships.get(sea.get(col, row) - 1);\r\n                    if (ship.isSunk()) {\r\n                        ++misses;\r\n                        System.out.println(\"There used to be a ship at that point, but you sunk it.\");\r\n                        System.out.println(\"Splash!  Try again.\");\r\n                    } else if (ship.wasHit(col, row)) {\r\n                        ++misses;\r\n                        System.out.println(\"You already put a hole in ship number \" + ship.id());\r\n                        System.out.println(\"Splash!  Try again.\");\r\n                    } else {\r\n                        ship.hit(col, row);\r\n                        ++hits;\r\n                        System.out.println(\"A direct hit on ship number \" + ship.id());\r\n\r\n                        // If a ship was hit, we need to know whether it was sunk.\r\n                        // If so, tell the player and update our counts\r\n                        if (ship.isSunk()) {\r\n                            ++lost;\r\n                            System.out.println(\"And you sunk it.  Hurrah for the good guys.\");\r\n                            System.out.print(\"So far, the bad guys have lost \");\r\n                            ArrayList<String> typeDescription = new ArrayList<>();\r\n                            for (int i = 0 ; i < sizes.length; ++i) {\r\n                                if (sizes[i] == ship.size()) {\r\n                                    ++losses[i];\r\n                                }\r\n                                StringBuilder sb = new StringBuilder();\r\n                                sb.append(losses[i]);\r\n                                sb.append(\" \");\r\n                                sb.append(NAMES_BY_SIZE[sizes[i]]);\r\n                                if (losses[i] != 1)\r\n                                    sb.append(\"s\");\r\n                                typeDescription.add(sb.toString());\r\n                            }\r\n                            System.out.println(String.join(\", \", typeDescription));\r\n                            double ratioNum = ((double)misses)/hits;\r\n                            String ratio = NumberFormat.getInstance().format(ratioNum);\r\n                            System.out.println(\"Your current splash/hit ratio is \" + ratio);\r\n\r\n                            if (lost == ships.size()) {\r\n                                System.out.println(\"You have totally wiped out the bad guys' fleet\");\r\n                                System.out.println(\"With a final splash/hit ratio of \" + ratio);\r\n\r\n                                if (misses == 0) {\r\n                                    System.out.println(\"Congratulations - A direct hit every time.\");\r\n                                }\r\n\r\n                                System.out.println(\"\\n****************************\\n\");\r\n                            }\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        catch (IOException e) {\r\n            // This should not happen running from console, but java requires us to check for it\r\n            System.err.println(\"System error.\\n\" + e);\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/09_Battle/java/Battle.java b/09_Battle/java/Battle.java
+--- a/09_Battle/java/Battle.java	(revision c363800020dad04a85047a98ec77aa3badb4814a)
++++ b/09_Battle/java/Battle.java	(date 1669161366727)
+@@ -71,7 +71,7 @@
+         // Build up the list of all the ships
+         int shipNumber = 1;
+         for (int type = 0; type < counts.length; ++type) {
+-            for (int i = 0; i < counts[i]; ++i) {
++            for (int i = 0; i < counts[type]; ++i) {
+                 ships.add(new Ship(shipNumber++, sizes[type]));
+             }
+         }
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n\r\n    <groupId>groupId</groupId>\r\n    <artifactId>SolutionCode-IDEA</artifactId>\r\n    <version>1.0-SNAPSHOT</version>\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>org.junit.jupiter</groupId>\r\n            <artifactId>junit-jupiter-api</artifactId>\r\n            <version>5.8.2</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.junit.jupiter</groupId>\r\n            <artifactId>junit-jupiter-params</artifactId>\r\n            <version>5.8.2</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.projectlombok</groupId>\r\n            <artifactId>lombok</artifactId>\r\n            <version>1.18.24</version>\r\n            <scope>provided</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.mockito</groupId>\r\n            <artifactId>mockito-core</artifactId>\r\n            <version>4.4.0</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.testng</groupId>\r\n            <artifactId>testng</artifactId>\r\n            <version>RELEASE</version>\r\n            <scope>compile</scope>\r\n        </dependency>\r\n    </dependencies>\r\n    <properties>\r\n        <maven.compiler.source>18</maven.compiler.source>\r\n        <maven.compiler.target>18</maven.compiler.target>\r\n    </properties>\r\n\r\n\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	(revision c363800020dad04a85047a98ec77aa3badb4814a)
++++ b/pom.xml	(date 1669084800789)
+@@ -7,17 +7,29 @@
+     <groupId>groupId</groupId>
+     <artifactId>SolutionCode-IDEA</artifactId>
+     <version>1.0-SNAPSHOT</version>
++    <build>
++        <plugins>
++            <plugin>
++                <groupId>org.apache.maven.plugins</groupId>
++                <artifactId>maven-compiler-plugin</artifactId>
++                <configuration>
++                    <source>19</source>
++                    <target>19</target>
++                </configuration>
++            </plugin>
++        </plugins>
++    </build>
+     <dependencies>
+         <dependency>
+             <groupId>org.junit.jupiter</groupId>
+             <artifactId>junit-jupiter-api</artifactId>
+-            <version>5.8.2</version>
++            <version>5.9.0</version>
+             <scope>test</scope>
+         </dependency>
+         <dependency>
+             <groupId>org.junit.jupiter</groupId>
+             <artifactId>junit-jupiter-params</artifactId>
+-            <version>5.8.2</version>
++            <version>5.9.0</version>
+             <scope>test</scope>
+         </dependency>
+         <dependency>
+@@ -37,6 +49,12 @@
+             <artifactId>testng</artifactId>
+             <version>RELEASE</version>
+             <scope>compile</scope>
++        </dependency>
++        <dependency>
++            <groupId>junit</groupId>
++            <artifactId>junit</artifactId>
++            <version>4.13.1</version>
++            <scope>test</scope>
+         </dependency>
+     </dependencies>
+     <properties>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_19\" default=\"true\" project-jdk-name=\"openjdk-19\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision c363800020dad04a85047a98ec77aa3badb4814a)
++++ b/.idea/misc.xml	(date 1669084800874)
+@@ -7,7 +7,7 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"BranchesTreeState\">\r\n    <expand>\r\n      <path>\r\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"LOCAL_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n      </path>\r\n      <path>\r\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n      </path>\r\n      <path>\r\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"GROUP_NODE:origin\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n      </path>\r\n    </expand>\r\n    <select />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"8c127946-980c-4856-97b9-67b1502ccaee\" name=\"Changes\" comment=\"Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later...\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/09_Battle/test/InputTest.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/09_Battle/test/InputTest.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"mavenHome\" value=\"C:\\Program Files\\JetBrains\\IntelliJ IDEA Community Edition 2020.1.3\\plugins\\maven\\lib\\maven3\" />\r\n        <option name=\"useMavenConfig\" value=\"true\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2G3fKOE84AH7cswjCMf0gxIMhgl\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <OptionsSetting value=\"false\" id=\"Update\" />\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyClassDialog.RECENTS_KEY\">\r\n      <recent name=\"\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"JUnit.InputTest\">\r\n    <configuration name=\"InputTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"BattleShips\" />\r\n      <option name=\"PACKAGE_NAME\" value=\"\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"InputTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"InputTest.readCoordinates_Non_Int_Values_Throw_Exception\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"BattleShips\" />\r\n      <option name=\"PACKAGE_NAME\" value=\"\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"InputTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"readCoordinates_Non_Int_Values_Throw_Exception(java.lang.String,java.lang.String)\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"InputTest.readCoordinates_Values_Out_Of_Range_Returns_False\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"BattleShips\" />\r\n      <option name=\"PACKAGE_NAME\" value=\"\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"InputTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"readCoordinates_Values_Out_Of_Range_Returns_False(java.lang.String,java.lang.String)\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"InputTest.x_should_return_x\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"BattleShips\" />\r\n      <option name=\"PACKAGE_NAME\" value=\"\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"InputTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"x_should_return_x(java.lang.String,java.lang.String)\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"InputTest.y_should_return_y\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"BattleShips\" />\r\n      <option name=\"PACKAGE_NAME\" value=\"\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"InputTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"y_should_return_y(java.lang.String,java.lang.String)\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"JUnit.InputTest\" />\r\n        <item itemvalue=\"JUnit.InputTest.y_should_return_y\" />\r\n        <item itemvalue=\"JUnit.InputTest.x_should_return_x\" />\r\n        <item itemvalue=\"JUnit.InputTest.readCoordinates_Non_Int_Values_Throw_Exception\" />\r\n        <item itemvalue=\"JUnit.InputTest.readCoordinates_Values_Out_Of_Range_Returns_False\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"8c127946-980c-4856-97b9-67b1502ccaee\" name=\"Changes\" comment=\"\" />\r\n      <created>1665622124878</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1665622124878</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later...\">\r\n      <created>1668420733286</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1668420733286</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later...\">\r\n      <created>1668461218072</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1668461218072</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later...\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later...\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/09_Battle/test/InputTest.java</url>\r\n          <line>49</line>\r\n          <option name=\"timeStamp\" value=\"3\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/BattleShips$InputTest_Input_Takes_Any_Integer_On_Creation.ic\" NAME=\"InputTest.Input_Takes_Any_Integer_On_Creation Coverage Results\" MODIFIED=\"1668313529239\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\" />\r\n    <SUITE FILE_PATH=\"coverage/BattleShips$SeaTest.ic\" NAME=\"SeaTest Coverage Results\" MODIFIED=\"1665691949982\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\" />\r\n    <SUITE FILE_PATH=\"coverage/BattleShips$InputTest.ic\" NAME=\"InputTest Coverage Results\" MODIFIED=\"1668463478411\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\" />\r\n    <SUITE FILE_PATH=\"coverage/BattleShips$InputTest_MockTest.ic\" NAME=\"InputTest.MockTest Coverage Results\" MODIFIED=\"1668420840015\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c363800020dad04a85047a98ec77aa3badb4814a)
++++ b/.idea/workspace.xml	(date 1669161366560)
+@@ -23,8 +23,12 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="8c127946-980c-4856-97b9-67b1502ccaee" name="Changes" comment="Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later...">
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/09_Battle/java/Battle.java" beforeDir="false" afterPath="$PROJECT_DIR$/09_Battle/java/Battle.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/09_Battle/test/BattleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/09_Battle/test/BattleTest.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/09_Battle/test/InputTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/09_Battle/test/InputTest.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -32,19 +36,16 @@
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
+   <component name="Git.Settings">
++    <option name="RECENT_BRANCH_BY_REPOSITORY">
++      <map>
++        <entry key="$PROJECT_DIR$" value="master" />
++      </map>
++    </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+   </component>
+-  <component name="MavenImportPreferences">
+-    <option name="generalSettings">
+-      <MavenGeneralSettings>
+-        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.1.3\plugins\maven\lib\maven3" />
+-        <option name="useMavenConfig" value="true" />
+-      </MavenGeneralSettings>
+-    </option>
+-  </component>
+   <component name="ProjectId" id="2G3fKOE84AH7cswjCMf0gxIMhgl" />
+   <component name="ProjectLevelVcsManager">
+     <OptionsSetting value="false" id="Update" />
+@@ -56,10 +57,14 @@
+   </component>
+   <component name="PropertiesComponent">{
+   &quot;keyToString&quot;: {
+-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
++    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
++    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
++    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
++    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
++    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
+   }
+ }</component>
+   <component name="RecentsManager">
+@@ -67,63 +72,58 @@
+       <recent name="" />
+     </key>
+   </component>
+-  <component name="RunManager" selected="JUnit.InputTest">
+-    <configuration name="InputTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+-      <module name="BattleShips" />
+-      <option name="PACKAGE_NAME" value="" />
+-      <option name="MAIN_CLASS_NAME" value="InputTest" />
+-      <option name="TEST_OBJECT" value="class" />
++  <component name="RunManager" selected="Application.Battle">
++    <configuration name="Battle" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="Battle" />
++      <module name="SolutionCode-IDEA" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="InputTest.readCoordinates_Non_Int_Values_Throw_Exception" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+-      <module name="BattleShips" />
++    <configuration name="BattleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="SolutionCode-IDEA" />
+       <option name="PACKAGE_NAME" value="" />
+-      <option name="MAIN_CLASS_NAME" value="InputTest" />
+-      <option name="METHOD_NAME" value="readCoordinates_Non_Int_Values_Throw_Exception(java.lang.String,java.lang.String)" />
+-      <option name="TEST_OBJECT" value="method" />
++      <option name="MAIN_CLASS_NAME" value="BattleTest" />
++      <option name="TEST_OBJECT" value="class" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="InputTest.readCoordinates_Values_Out_Of_Range_Returns_False" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+-      <module name="BattleShips" />
++    <configuration name="BattleTest.Hitting_Valid_Tile_Should_Increase_Hit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="SolutionCode-IDEA" />
+       <option name="PACKAGE_NAME" value="" />
+-      <option name="MAIN_CLASS_NAME" value="InputTest" />
+-      <option name="METHOD_NAME" value="readCoordinates_Values_Out_Of_Range_Returns_False(java.lang.String,java.lang.String)" />
++      <option name="MAIN_CLASS_NAME" value="BattleTest" />
++      <option name="METHOD_NAME" value="Hitting_Valid_Tile_Should_Increase_Hit" />
+       <option name="TEST_OBJECT" value="method" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="InputTest.x_should_return_x" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+-      <module name="BattleShips" />
++    <configuration name="InputTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="SolutionCode-IDEA" />
+       <option name="PACKAGE_NAME" value="" />
+       <option name="MAIN_CLASS_NAME" value="InputTest" />
+-      <option name="METHOD_NAME" value="x_should_return_x(java.lang.String,java.lang.String)" />
+-      <option name="TEST_OBJECT" value="method" />
++      <option name="TEST_OBJECT" value="class" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="InputTest.y_should_return_y" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++    <configuration name="InputTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+       <module name="BattleShips" />
+       <option name="PACKAGE_NAME" value="" />
+       <option name="MAIN_CLASS_NAME" value="InputTest" />
+-      <option name="METHOD_NAME" value="y_should_return_y(java.lang.String,java.lang.String)" />
+-      <option name="TEST_OBJECT" value="method" />
++      <option name="TEST_OBJECT" value="class" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+     <recent_temporary>
+       <list>
++        <item itemvalue="Application.Battle" />
++        <item itemvalue="JUnit.BattleTest.Hitting_Valid_Tile_Should_Increase_Hit" />
++        <item itemvalue="JUnit.BattleTest" />
++        <item itemvalue="JUnit.InputTest (1)" />
+         <item itemvalue="JUnit.InputTest" />
+-        <item itemvalue="JUnit.InputTest.y_should_return_y" />
+-        <item itemvalue="JUnit.InputTest.x_should_return_x" />
+-        <item itemvalue="JUnit.InputTest.readCoordinates_Non_Int_Values_Throw_Exception" />
+-        <item itemvalue="JUnit.InputTest.readCoordinates_Values_Out_Of_Range_Returns_False" />
+       </list>
+     </recent_temporary>
+   </component>
+@@ -173,9 +173,19 @@
+       <breakpoints>
+         <line-breakpoint enabled="true" type="java-line">
+           <url>file://$PROJECT_DIR$/09_Battle/test/InputTest.java</url>
+-          <line>49</line>
++          <line>47</line>
+           <option name="timeStamp" value="3" />
+         </line-breakpoint>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/09_Battle/test/BattleTest.java</url>
++          <line>92</line>
++          <option name="timeStamp" value="5" />
++        </line-breakpoint>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/09_Battle/java/Battle.java</url>
++          <line>73</line>
++          <option name="timeStamp" value="6" />
++        </line-breakpoint>
+       </breakpoints>
+     </breakpoint-manager>
+   </component>
+@@ -184,9 +194,10 @@
+     <select />
+   </component>
+   <component name="com.intellij.coverage.CoverageDataManagerImpl">
++    <SUITE FILE_PATH="coverage/BattleShips$BattleTest.ic" NAME="BattleTest Coverage Results" MODIFIED="1669084942767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
++    <SUITE FILE_PATH="coverage/BattleShips$InputTest_MockTest.ic" NAME="InputTest.MockTest Coverage Results" MODIFIED="1668420840015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
++    <SUITE FILE_PATH="coverage/BattleShips$SeaTest.ic" NAME="SeaTest Coverage Results" MODIFIED="1665704298011" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+     <SUITE FILE_PATH="coverage/BattleShips$InputTest_Input_Takes_Any_Integer_On_Creation.ic" NAME="InputTest.Input_Takes_Any_Integer_On_Creation Coverage Results" MODIFIED="1668313529239" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+-    <SUITE FILE_PATH="coverage/BattleShips$SeaTest.ic" NAME="SeaTest Coverage Results" MODIFIED="1665691949982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+     <SUITE FILE_PATH="coverage/BattleShips$InputTest.ic" NAME="InputTest Coverage Results" MODIFIED="1668463478411" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+-    <SUITE FILE_PATH="coverage/BattleShips$InputTest_MockTest.ic" NAME="InputTest.MockTest Coverage Results" MODIFIED="1668420840015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+   </component>
+ </project>
+\ No newline at end of file
