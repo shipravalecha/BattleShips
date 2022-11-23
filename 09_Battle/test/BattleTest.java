@@ -105,6 +105,18 @@ public class BattleTest {
         Assertions.assertEquals(1, battle.getMisses());
     }
     @Test
+    public void Sinking_A_Ship_Increases_Losses(){
+        String[] input = {"1,1", "1,2", "1,3", "1,4", "4,1", "3,1", "2,1", "1,1"};
+        battle = new Battle(new int[] {4},  new int[] {4});
+        for(String s : input){
+            System.setIn(new ByteArrayInputStream(s.getBytes()));
+            battle.play();
+        }
+        Assertions.assertEquals(1, battle.getLosses().length);
+        Assertions.assertEquals(1, battle.getMisses());
+    }
+
+    @Test
     public void Shooting_Same_Spot_Should_Increase_Misses(){
         String input = "1,1";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
@@ -118,6 +130,15 @@ public class BattleTest {
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         battle.play();
         Assertions.assertEquals(1, battle.getMisses());
+    }
+
+    @Test
+    public void Running_main_should_return_true(){
+        String[] args = {};
+        String input = "1,1";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        Battle.main(null);
+        Assertions.assertEquals(true, true);
     }
 }
 

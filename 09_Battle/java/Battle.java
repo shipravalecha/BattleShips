@@ -174,15 +174,6 @@ public class Battle {
         sizes = shipSizes;
         counts = shipCounts;
 
-        for (int sz : sizes) {
-            if ((sz < 0) || (sz > seaSize))
-                throw new RuntimeException("Ship has invalid size " + sz);
-        }
-
-        if (counts.length != sizes.length) {
-            throw new RuntimeException("Ship counts must match");
-        }
-
         // Initialize game state
         sea = new Sea(seaSize);          // holds what ship if any occupies each tile
         ships = new ArrayList<Ship>();   // positions and states of all the ships

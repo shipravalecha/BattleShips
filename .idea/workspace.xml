@@ -22,10 +22,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c127946-980c-4856-97b9-67b1502ccaee" name="Changes" comment="Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later...">
+    <list default="true" id="8c127946-980c-4856-97b9-67b1502ccaee" name="Changes" comment="Adding a Battle constructor stub to test with&#10;Added some unit tests for battle.play">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/09_Battle/java/Battle.java" beforeDir="false" afterPath="$PROJECT_DIR$/09_Battle/java/Battle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/09_Battle/test/BattleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/09_Battle/test/BattleTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Battle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Battle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/BattleTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/BattleTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/SeaTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/SeaTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,13 +79,6 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.BattleTest">
-    <configuration name="Battle" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Battle" />
-      <module name="SolutionCode-IDEA" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="BattleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SolutionCode-IDEA" />
       <option name="PACKAGE_NAME" value="" />
@@ -103,6 +98,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="BattleTest.Running_main_should_return_true" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SolutionCode-IDEA" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="BattleTest" />
+      <option name="METHOD_NAME" value="Running_main_should_return_true" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="BattleTest.Shooting_Same_Spot_Should_Increase_Misses" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SolutionCode-IDEA" />
       <option name="PACKAGE_NAME" value="" />
@@ -113,11 +118,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BattleTest.Valid_Hit_Should_Increase_Hits" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BattleTest.Sinking_A_Ship_Increases_Losses" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SolutionCode-IDEA" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="BattleTest" />
-      <option name="METHOD_NAME" value="Valid_Hit_Should_Increase_Hits" />
+      <option name="METHOD_NAME" value="Sinking_A_Ship_Increases_Losses" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -127,9 +132,9 @@
       <list>
         <item itemvalue="JUnit.BattleTest" />
         <item itemvalue="JUnit.BattleTest.Shooting_Same_Spot_Should_Increase_Misses" />
+        <item itemvalue="JUnit.BattleTest.Running_main_should_return_true" />
+        <item itemvalue="JUnit.BattleTest.Sinking_A_Ship_Increases_Losses" />
         <item itemvalue="JUnit.BattleTest.Miss_Should_Increase_Misses" />
-        <item itemvalue="JUnit.BattleTest.Valid_Hit_Should_Increase_Hits" />
-        <item itemvalue="Application.Battle" />
       </list>
     </recent_temporary>
   </component>
@@ -157,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668461218072</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Adding a Battle constructor stub to test with&#10;Added some unit tests for battle.play">
+      <created>1669164852994</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1669164852995</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,7 +188,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored Input.java to be testable&#10;Added MockTest to InputTest.java&#10;Will rename MockTest later..." />
+    <MESSAGE value="Adding a Battle constructor stub to test with&#10;Added some unit tests for battle.play" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding a Battle constructor stub to test with&#10;Added some unit tests for battle.play" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -194,7 +207,7 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/BattleShips$BattleTest.ic" NAME="BattleTest Coverage Results" MODIFIED="1669164399186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/BattleShips$BattleTest.ic" NAME="BattleTest Coverage Results" MODIFIED="1669165558624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/BattleShips$InputTest_MockTest.ic" NAME="InputTest.MockTest Coverage Results" MODIFIED="1668420840015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/BattleShips$SeaTest.ic" NAME="SeaTest Coverage Results" MODIFIED="1665691949982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/BattleShips$InputTest_Input_Takes_Any_Integer_On_Creation.ic" NAME="InputTest.Input_Takes_Any_Integer_On_Creation Coverage Results" MODIFIED="1668313529239" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
