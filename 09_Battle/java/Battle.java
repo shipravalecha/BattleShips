@@ -168,4 +168,42 @@ public class Battle {
             System.err.println("System error.\n" + e);
         }
     }
+
+    public Battle(int[] shipSizes, int[] shipCounts) {
+        seaSize = 4;
+        sizes = shipSizes;
+        counts = shipCounts;
+
+        for (int sz : sizes) {
+            if ((sz < 0) || (sz > seaSize))
+                throw new RuntimeException("Ship has invalid size " + sz);
+        }
+
+        if (counts.length != sizes.length) {
+            throw new RuntimeException("Ship counts must match");
+        }
+
+        // Initialize game state
+        sea = new Sea(seaSize);          // holds what ship if any occupies each tile
+        ships = new ArrayList<Ship>();   // positions and states of all the ships
+        losses = new int[counts.length]; // how many ships of each type have been sunk
+
+        // Build up the list of all the ships
+        int shipNumber = 1;
+        for (int type = 0; type < counts.length; ++type) {
+            for (int i = 0; i < counts[type]; ++i) {
+                ships.add(new Ship(shipNumber++, sizes[type]));
+            }
+        }
+
+        // When we put the ships in the sea, we put the biggest ones in first, or they might
+        // not fit
+        ArrayList<Ship> largestFirst = new ArrayList<>(ships);
+        Collections.sort(largestFirst, Comparator.comparingInt((Ship ship) -> ship.size()).reversed());
+
+        // place each ship into the sea
+        for (Ship ship : largestFirst) {
+            ship.placeRandom(sea);
+        }
+    }
 }

@@ -5,11 +5,7 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BattleTest {
     Battle battle;
@@ -88,6 +84,40 @@ public class BattleTest {
         }
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         battle.play();
+    }
+
+    @Test
+    public void Valid_Hit_Should_Increase_Hits(){
+        String input = "1,1";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        battle = new Battle(new int[] {4},  new int[] {4});
+        Assertions.assertEquals(0, battle.getHits());
+        battle.play();
+        Assertions.assertEquals(1, battle.getHits());
+    }
+    @Test
+    public void Miss_Should_Increase_Misses(){
+        String input = "1,1";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        battle = new Battle(new int[] {0},  new int[] {1});
+        Assertions.assertEquals(0, battle.getMisses());
+        battle.play();
+        Assertions.assertEquals(1, battle.getMisses());
+    }
+    @Test
+    public void Shooting_Same_Spot_Should_Increase_Misses(){
+        String input = "1,1";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        battle = new Battle(new int[] {4},  new int[] {4});
+        battle.play();
+
+        Assertions.assertEquals(0, battle.getMisses());
+        Assertions.assertEquals(1, battle.getHits());
+
+
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        battle.play();
+        Assertions.assertEquals(1, battle.getMisses());
     }
 }
 
