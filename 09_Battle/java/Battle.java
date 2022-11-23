@@ -71,7 +71,7 @@ public class Battle {
         // Build up the list of all the ships
         int shipNumber = 1;
         for (int type = 0; type < counts.length; ++type) {
-            for (int i = 0; i < counts[i]; ++i) {
+            for (int i = 0; i < counts[type]; ++i) {
                 ships.add(new Ship(shipNumber++, sizes[type]));
             }
         }
