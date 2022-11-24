@@ -21,6 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 public class ShipTest {
     Ship ship;
+    Ship shipTwo;
 
     @ParameterizedTest(name = "Id_Function_Valid_Value")
     @CsvSource({
@@ -99,11 +100,13 @@ public class ShipTest {
     })
     public void test_If_orientation_Is_Valid(int orient, int expectedOrient){
         ship = new Ship(1,1);
-        Ship shipTwo = new Ship(2,1);
+        shipTwo = new Ship(2,1);
         Assertions.assertEquals(ship.place(seaMockForPlaced, 1, 1, orient),
                 shipTwo.place(seaMockForPlaced, 0,1, expectedOrient));
 
     }
+
+
     // return, exceptions, conditions loop
 
     // For boolean place:
