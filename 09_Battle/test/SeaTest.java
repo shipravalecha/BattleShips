@@ -47,7 +47,7 @@ public class SeaTest {
     // if these are negative or greater than size
     @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_XValues")
     @CsvSource({
-            "-1, 1, Program error: x cannot be -111",
+            "-1, 1, Program error: x cannot be -1",
             "-2, 2, Program error: x cannot be -2",
             "-3, 3, Program error: x cannot be -3",
             "11, 2, Program error: x cannot be 11"
