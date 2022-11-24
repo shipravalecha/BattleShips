@@ -10,7 +10,7 @@ public class SeaTest {
     // Test to validate the value returned by size method
     @ParameterizedTest(name = "Size_Method_Should_Return_Value")
     @CsvSource({
-            "10, 10",
+            "10, 20",
             "20, 20",
             "16, 16",
             "49, 49"
@@ -109,7 +109,7 @@ public class SeaTest {
     // Test_To_Check_If_X_And_Y_isEmpty
     @ParameterizedTest(name = "Test_To_Check_If_X_And_Y_isEmpty")
     @CsvSource({
-            "-1, 1, True",
+            "-1, 1, False",
             "-2, 2, False",
             "1, -1, False",
             "2, -2, False",
