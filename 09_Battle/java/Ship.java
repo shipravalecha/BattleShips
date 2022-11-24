@@ -93,16 +93,12 @@ class Ship {
         }
         switch(orient) {
         case ORIENT_E:                 // east is increasing X coordinate
+        case ORIENT_SE:                // southeast is increasing X and Y
             orientX = 1; orientY = 0;
             break;
-        case ORIENT_SE:                // southeast is increasing X and Y
-            orientX = 1; orientY = 1;
-            break;
         case ORIENT_S:                 // south is increasing Y
-            orientX = 0; orientY = 1;
-            break;
         case ORIENT_SW:                // southwest is increasing Y but decreasing X
-            orientX = -1; orientY = 1;
+            orientX = 0; orientY = 1;
             break;
         default:
             throw new RuntimeException("Invalid orientation " + orient);
