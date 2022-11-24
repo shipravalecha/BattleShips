@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 //import org.junit.jupiter.api.Disabled;
@@ -86,6 +87,21 @@ public class ShipTest {
         });
 
         Assertions.assertEquals(message, runtimeException.getMessage());
+
+    }
+
+    @ParameterizedTest(name = "test_If_orientation_Is_Valid")
+    @CsvSource({
+            "0,0",
+            "1,1",
+            "2,2",
+            "3,3"
+    })
+    public void test_If_orientation_Is_Valid(int orient, int expectedOrient){
+        ship = new Ship(1,1);
+        Ship shipTwo = new Ship(2,1);
+        Assertions.assertEquals(ship.place(seaMockForPlaced, 1, 1, orient),
+                shipTwo.place(seaMockForPlaced, 0,1, expectedOrient));
 
     }
     // return, exceptions, conditions loop
