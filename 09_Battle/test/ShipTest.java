@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
@@ -48,6 +48,12 @@ public class ShipTest {
         ship = new Ship(1, sz);
         int IdActualResult = ship.size();
         Assertions.assertEquals(IdActualResult, expectedSz);
+    }
+
+    @Test
+    public void test_If_Ship_is_Sunk(){
+        ship = new Ship(1,1);
+        assertFalse(ship.isSunk());
     }
 
     @InjectMocks
@@ -107,13 +113,23 @@ public class ShipTest {
 
     }
 
-
     @Test
     public void test_If_Starting_Position_Is_Occupied(){
         ship = new Ship(1,1);
         shipTwo = new Ship(2,1);
         ship.place(seaMockForPlaced, 1,1,1);
         assertFalse(shipTwo.place(seaMockForPlaced,1,1,1));
+
+    }
+
+    @InjectMocks
+    Sea seaMockForHit = new Sea(1);
+    @Test
+    public void test_If_Ship_is_Hit_And_Sunk(){
+        ship = new Ship(1,1);
+        ship.place(seaMockForHit,1,1,0);
+        ship.hit(0,1);
+        assertTrue(ship.isSunk());
 
     }
 
