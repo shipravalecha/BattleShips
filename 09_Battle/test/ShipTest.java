@@ -1,8 +1,21 @@
+import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 //import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+
+import static org.mockito.Mockito.*;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 
 public class ShipTest {
@@ -32,6 +45,21 @@ public class ShipTest {
         ship = new Ship(1, sz);
         int IdActualResult = ship.size();
         Assertions.assertEquals(IdActualResult, expectedSz);
+    }
+
+    @InjectMocks
+    Sea seaMock = new Sea(1);
+    @Test
+    public void testPlaceRandom(){
+        ship = new Ship(1,4);
+        String message = "Could not place any more ships";
+
+        RuntimeException runtimeException = Assertions.assertThrows(RuntimeException.class, ()->{
+            ship.placeRandom(seaMock);
+        });
+
+        Assertions.assertEquals(message, runtimeException.getMessage());
+
     }
 
     // return, exceptions, conditions loop
