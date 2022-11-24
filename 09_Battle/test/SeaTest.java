@@ -10,7 +10,7 @@ public class SeaTest {
     // Test to validate the value returned by size method
     @ParameterizedTest(name = "Size_Method_Should_Return_Value")
     @CsvSource({
-            "10, 20",
+            "10, 10",
             "20, 20",
             "16, 16",
             "49, 49"
@@ -47,7 +47,7 @@ public class SeaTest {
     // if these are negative or greater than size
     @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_XValues")
     @CsvSource({
-            "-1, 1, Program error: x cannot be -1",
+            "-1, 1, Program error: x cannot be -111",
             "-2, 2, Program error: x cannot be -2",
             "-3, 3, Program error: x cannot be -3",
             "11, 2, Program error: x cannot be 11"
