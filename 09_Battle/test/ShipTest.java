@@ -76,6 +76,18 @@ public class ShipTest {
         Assertions.assertEquals(message, runtimeException.getMessage());
 
     }
+
+    @Test
+    public void test_If_orientation_Is_Invalid(){
+        ship = new Ship(1,4);
+        String message = "Invalid orientation 5";
+        RuntimeException runtimeException = Assertions.assertThrows(RuntimeException.class, () ->{
+            ship.place(seaMockForPlaced,1,1,5);
+        });
+
+        Assertions.assertEquals(message, runtimeException.getMessage());
+
+    }
     // return, exceptions, conditions loop
 
     // For boolean place:
