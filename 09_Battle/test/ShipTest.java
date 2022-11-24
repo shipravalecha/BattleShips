@@ -74,7 +74,7 @@ public class ShipTest {
     @InjectMocks
     Sea seaMockForPlaced = new Sea(4);
     @Test
-    public void test_If_Ship_is_Placed(){
+    public void test_If_Ship_is_Placed_Twice(){
         ship = new Ship(1,4);
         ship.place(seaMockForPlaced, 1,1,1);
         String message ="Program error - placed ship "+ 1 + " twice";
