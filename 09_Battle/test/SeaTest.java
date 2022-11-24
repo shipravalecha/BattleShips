@@ -109,7 +109,7 @@ public class SeaTest {
     // Test_To_Check_If_X_And_Y_isEmpty
     @ParameterizedTest(name = "Test_To_Check_If_X_And_Y_isEmpty")
     @CsvSource({
-            "-1, 1, False",
+            "-1, 1, True",
             "-2, 2, False",
             "1, -1, False",
             "2, -2, False",
