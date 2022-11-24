@@ -62,6 +62,20 @@ public class ShipTest {
 
     }
 
+    @InjectMocks
+    Sea seaMockForPlaced = new Sea(4);
+    @Test
+    public void test_If_Ship_is_Placed(){
+        ship = new Ship(1,4);
+        ship.place(seaMockForPlaced, 1,1,1);
+        String message ="Program error - placed ship "+ 1 + " twice";
+        RuntimeException runtimeException = Assertions.assertThrows(RuntimeException.class, () ->{
+            ship.place(seaMockForPlaced,1,1,1);
+        });
+
+        Assertions.assertEquals(message, runtimeException.getMessage());
+
+    }
     // return, exceptions, conditions loop
 
     // For boolean place:
