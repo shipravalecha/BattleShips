@@ -10,7 +10,7 @@ public class SeaTest {
     // Test to validate the value returned by size method
     @ParameterizedTest(name = "Size_Method_Should_Return_Value")
     @CsvSource({
-            "10, 10",
+            "10, 20",
             "20, 20",
             "16, 16",
             "49, 49"
