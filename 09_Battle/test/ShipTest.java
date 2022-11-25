@@ -1,50 +1,46 @@
-import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
-//import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.junit.Assert;
+import org.junit.Rule;
+//import org.junit.jupiter.api.Disabled;
 import org.mockito.Mock;
-
 import static org.mockito.Mockito.*;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-
+import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 
 public class ShipTest {
     Ship ship;
     Ship shipTwo;
 
-    @ParameterizedTest(name = "Id_Function_Valid_Value")
+    @ParameterizedTest(name = "test_Id_Function_with_Valid_Value")
     @CsvSource({
             "1, 1",
             "5, 5",
             "10, 10"
     })
-    public void Id_Function_Valid_Value(int id, int expectedId){
+    public void test_Id_Function_with_Valid_Value(int id, int expectedId){
         ship = new Ship(id, 5);
         int IdActualResult = ship.id();
         Assertions.assertEquals(IdActualResult, expectedId);
     }
 
 
-    @ParameterizedTest(name = "Size_Function_Valid_Value")
+    @ParameterizedTest(name = "test_Size_Function_With_Valid_Value")
     @CsvSource({
             "1, 1",
             "5, 5",
             "10, 10"
     })
 
-    public void Sz_Function_Valid_Value(int sz, int expectedSz){
+    public void test_Size_Function_With_Valid_Value(int sz, int expectedSz){
         ship = new Ship(1, sz);
         int IdActualResult = ship.size();
         Assertions.assertEquals(IdActualResult, expectedSz);
@@ -87,7 +83,7 @@ public class ShipTest {
     }
 
     @Test
-    public void test_If_orientation_Is_Invalid(){
+    public void test_If_Orientation_Is_Invalid(){
         ship = new Ship(1,4);
         String message = "Invalid orientation 5";
         RuntimeException runtimeException = Assertions.assertThrows(RuntimeException.class, () ->{
@@ -105,7 +101,7 @@ public class ShipTest {
             "2,2",
             "3,3"
     })
-    public void test_If_orientation_Is_Valid(int orient, int expectedOrient){
+    public void test_If_Orientation_Is_Valid(int orient, int expectedOrient){
         ship = new Ship(1,1);
         shipTwo = new Ship(2,1);
         Assertions.assertEquals(ship.place(seaMockForPlaced, 1, 1, orient),
