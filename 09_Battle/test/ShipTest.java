@@ -4,17 +4,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.InjectMocks;
-import org.junit.Assert;
-import org.junit.Rule;
-//import org.junit.jupiter.api.Disabled;
-import org.mockito.Mock;
-import static org.mockito.Mockito.*;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-import static org.mockito.Mockito.when;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
+
 
 public class ShipTest {
     Ship ship;
@@ -55,7 +45,7 @@ public class ShipTest {
     @InjectMocks
     Sea seaMock = new Sea(1);
     @Test
-    public void testPlaceRandom(){
+    public void test_PlaceRandom(){
         ship = new Ship(1,4);
         String message = "Could not place any more ships";
 
@@ -135,6 +125,7 @@ public class ShipTest {
         ship.place(seaMockForHit,1,1,0);
         ship.hit(0,1);
         assertTrue(ship.wasHit(0,1));
+
     }
 
 }
