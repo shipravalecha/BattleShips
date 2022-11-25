@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -73,6 +74,13 @@ public class ShipTest {
     }
 
     @Test
+    public void test_If_Ship_is_Placed(){
+        ship = new Ship(1, 2);
+        assertTrue(ship.place(seaMockForPlaced, 0,1,0));
+
+    }
+
+    @Test
     public void test_If_Orientation_Is_Invalid(){
         ship = new Ship(1,4);
         String message = "Invalid orientation 5";
@@ -120,6 +128,15 @@ public class ShipTest {
     }
 
     @Test
+    public void test_If_Ship_is_Hit_Using_Y_Coordinate(){
+        ship = new Ship(1,2);
+        ship.place(seaMockForPlaced,0,1,2);
+        ship.hit(0,1);
+        assertFalse(ship.isSunk());
+
+    }
+
+    @Test
     public void test_If_Ship_was_Hit(){
         ship = new Ship(1,1);
         ship.place(seaMockForHit,1,1,0);
@@ -127,5 +144,7 @@ public class ShipTest {
         assertTrue(ship.wasHit(0,1));
 
     }
+
+
 
 }
