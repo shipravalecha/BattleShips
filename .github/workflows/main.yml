@@ -31,13 +31,13 @@ jobs:
       uses: dawidd6/action-send-mail@v3
       with:
           server_address: smtp.gmail.com
-          server_port: 465
+          server_port: 587
           secure: true
           username: ${{secrets.MAIL_USERNAME}}
           password: ${{secrets.MAIL_PASSWORD}}
-          subject: Github Actions job result
+          subject: Github Actions Build and Test job result
           to: shipravalecha65@gmail.com,shipravalecha92@gmail.com
           from: Shipra
-          body: Build job of ${{github.repository}} completed successfully!
+          body: Build and test job of ${{github.repository}} completed successfully!
           
 
