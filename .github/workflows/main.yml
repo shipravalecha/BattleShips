@@ -27,10 +27,17 @@ jobs:
 
     - name: Build project with Maven
       run: mvn -B package --file pom.xml
-    - name: CINotify Email
-      uses: cinotify/github-action@v1.1.0
+    - name: Send Email
+      uses: dawidd6/action-send-mail@v3
       with:
-          to: 'shipravalecha92@gmail.com'
-          subject: 'build successful'
-          body: 'This is a notification from GitHub actions.'
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          subject: Github Actions job result
+          to: shipravalecha65@gmail.com,shipravalecha92@gmail.com
+          from: Shipra
+          body: Build job of ${{github.repository}} completed successfully!
+          
 
