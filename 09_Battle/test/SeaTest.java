@@ -77,7 +77,7 @@ public class SeaTest {
         Assertions.assertEquals("Program error: y cannot be " + y, exception.getMessage());
     }
 
-//    Test for index method to check for Exceptions for greater than size values
+//    // Test for index method to check for Exceptions for greater than size values
 //    @ParameterizedTest(name = "IndexMethod_ArrayIndexOutOfBoundsException_For_GreaterThanSizeValues")
 //    @CsvSource({"11,7", "1,90", "20,6"})
 //    public void IndexMethod_ArrayIndexOutOfBoundsException_For_GreaterThanSizeValues(int x, int y) {
