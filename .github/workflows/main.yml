@@ -27,3 +27,10 @@ jobs:
 
     - name: Build project with Maven
       run: mvn -B package --file pom.xml
+    - name: CINotify Email
+      uses: cinotify/github-action@v1.1.0
+      with:
+          to: 'shipravalecha92@gmail.com'
+          subject: 'build successful'
+          body: 'This is a notification from GitHub actions.'
+
