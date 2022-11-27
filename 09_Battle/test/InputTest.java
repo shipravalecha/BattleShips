@@ -43,7 +43,7 @@ public class InputTest {
             "1,1",
             "2,2",
             "3,3",
-            "4,14"
+            "4,4"
     })
     public void readCoordinates_Valid_String_Should_Return_True(String data, String data1) throws IOException {
         String foo = data + "," + data1;
