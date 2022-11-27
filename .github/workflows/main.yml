@@ -37,6 +37,7 @@ jobs:
           password: ${{secrets.MAIL_PASSWORD}}
           subject: Github Actions Build and Test job result
           to: shipravalecha65@gmail.com,shipravalecha92@gmail.com
+          cc: fshipra@seattleu.edu,mkao@seattleu.edu,tkalyani@seattleu.edu,cheny30@seattleu.edu
           from: Shipra
           body: Build and test job of ${{github.repository}} completed successfully!
           
