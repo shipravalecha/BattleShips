@@ -28,6 +28,8 @@ public class Battle {
     private int hits;        // how many hits the player has made
     private int misses;      // how many misses the player has made
 
+    private int lost;        // Count of how many ships are lost
+
     // Names of ships of each size. The game as written has ships of size 3, 4 and 5 but
     // can easily be modified. It makes no sense to have a ship of size zero though.
     private static String NAMES_BY_SIZE[] = {
@@ -67,7 +69,7 @@ public class Battle {
         sea = new Sea(seaSize);          // holds what ship if any occupies each tile
         ships = new ArrayList<Ship>();   // positions and states of all the ships
         losses = new int[counts.length]; // how many ships of each type have been sunk
-
+        lost = 0;                        // initialize to 0 ships lost
         // Build up the list of all the ships
         int shipNumber = 1;
         for (int type = 0; type < counts.length; ++type) {
@@ -92,7 +94,6 @@ public class Battle {
         System.out.println(sea.encodedDump());
         System.out.println("De-code it and use it if you can\nbut keep the de-coding method a secret.\n");
 
-        int lost = 0;
         System.out.println("Start game");
         Input input = new Input(seaSize);
         try {
@@ -178,7 +179,7 @@ public class Battle {
         sea = new Sea(seaSize);          // holds what ship if any occupies each tile
         ships = new ArrayList<Ship>();   // positions and states of all the ships
         losses = new int[counts.length]; // how many ships of each type have been sunk
-
+        lost = 0;                        // initialize to 0 ships lost
         // Build up the list of all the ships
         int shipNumber = 1;
         for (int type = 0; type < counts.length; ++type) {

@@ -140,5 +140,24 @@ public class BattleTest {
         Battle.main(null);
         Assertions.assertEquals(true, true);
     }
+
+    @Test
+    public void Sinking_All_Ship_Win_Battle(){
+        String[] input = {"1,1", "1,2", "1,3", "1,4",
+                "2,1", "2,2", "2,3", "2,4",
+                "3,1", "3,2", "3,3", "3,4",
+                "4,1", "4,2", "4,3", "4,4"};
+        int[] shipSize = {4};
+        int[] shipCount = {4};
+        battle = new Battle(4, shipSize,  shipCount);
+        for(String s : input){
+            System.setIn(new ByteArrayInputStream(s.getBytes()));
+            battle.play();
+        }
+
+        Assertions.assertEquals(1, battle.getLosses().length);
+        Assertions.assertEquals(0, battle.getMisses());
+    }
+
 }
 
