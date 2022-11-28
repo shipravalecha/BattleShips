@@ -151,6 +151,15 @@ public class ShipTest {
         ship.place(seaMockForPlaced,0,1,2);
         ship.hit(0,1);
         assertTrue(ship.wasHit(0,1));
+
+    }
+
+    @Test
+    public void test_If_Ship_Collide_Tiles(){
+        ship = new Ship(1,2);
+        ship.place(seaMockForPlaced, 0, 1,2);
+        assertTrue(ship.extendShipHelp(seaMockForPlaced, 1,1,0,0));
+
     }
 
 }
