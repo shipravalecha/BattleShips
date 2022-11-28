@@ -163,4 +163,8 @@ class Ship {
         if ((corner1 == 0) || (corner1 != corner2)) return true;
         return false;
     }
+
+    public boolean extendShipHelp(Sea s, int fromX, int fromY, int toX, int toY){
+        return extendShip(s,fromX, fromY, toX, toY);
+    }
 }
