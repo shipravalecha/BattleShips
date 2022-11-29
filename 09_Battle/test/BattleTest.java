@@ -87,7 +87,7 @@ public class BattleTest {
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         battle.play();
     }
-
+    //Hitting a ship should increase hit count by 1
     @Test
     public void Valid_Hit_Should_Increase_Hits(){
         String input = "1,1";
@@ -97,6 +97,7 @@ public class BattleTest {
         battle.play();
         Assertions.assertEquals(1, battle.getHits());
     }
+    //Missing a ship should increase miss count by 1
     @Test
     public void Miss_Should_Increase_Misses(){
         String input = "1,1";
@@ -106,6 +107,7 @@ public class BattleTest {
         battle.play();
         Assertions.assertEquals(1, battle.getMisses());
     }
+    //Sinking a ship should increase Loss count by 1
     @Test
     public void Sinking_A_Ship_Increases_Losses(){
         String[] input = {"1,1", "1,2", "1,3", "1,4", "4,1", "3,1", "2,1", "1,1"};
@@ -117,7 +119,8 @@ public class BattleTest {
         Assertions.assertEquals(1, battle.getLosses().length);
         Assertions.assertEquals(1, battle.getMisses());
     }
-
+    //Shooting the same ship on the same grid twice will increase hit count by one and miss count
+    //by one
     @Test
     public void Shooting_Same_Spot_Should_Increase_Misses(){
         String input = "1,1";
@@ -133,7 +136,7 @@ public class BattleTest {
         battle.play();
         Assertions.assertEquals(1, battle.getMisses());
     }
-
+    //Running main should be successful
     @Test
     public void Running_main_should_return_true(){
         String[] args = {};
