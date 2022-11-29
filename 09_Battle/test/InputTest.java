@@ -27,6 +27,7 @@ public class InputTest {
         Assertions.assertNotNull(input);
     }
 
+    //Checking if input is valid
     @Test
     public void readCoordinates_Null_Or_Empty_String_Should_Return_False() throws IOException {
         String data = "";
@@ -38,6 +39,7 @@ public class InputTest {
         Assertions.assertEquals(false, x);
     }
 
+    //Checking if valid input is accepted.
     @ParameterizedTest(name = "readCoordinates_Valid_String_Should_Return_True")
     @CsvSource({
             "1,1",
@@ -55,6 +57,7 @@ public class InputTest {
         Assertions.assertTrue(x);
     }
 
+    //Validating input is the correct length
     @ParameterizedTest(name = "readCoordinates_String_Length_Not_2_Returns_False")
     @CsvSource({
             "1,1,1",
@@ -72,6 +75,7 @@ public class InputTest {
         Assertions.assertFalse(x);
     }
 
+    //Validating that input out of bounds returns false
     @ParameterizedTest(name = "readCoordinates_Values_Out_Of_Range_Returns_False")
     @CsvSource({
             "-1,-1",
@@ -88,6 +92,7 @@ public class InputTest {
         Assertions.assertFalse(x);
     }
 
+    //Validating that input should only be numerical
     @ParameterizedTest(name = "readCoordinates_Valid_String_Should_Return_True")
     @CsvSource({
             "a,b",
@@ -103,12 +108,13 @@ public class InputTest {
         thrown.expect(NumberFormatException.class);
     }
 
+    //Validating that the x() function returns input properly
     @ParameterizedTest(name = "x_should_return_x")
     @CsvSource({
-            "1,1",
-            "2,2",
-            "3,3",
-            "4,4"
+            "1,2",
+            "2,3",
+            "3,4",
+            "4,5"
     })
     public void x_should_return_x(String data, String data1) throws IOException {
         String foo = data + "," + data1;
@@ -120,12 +126,13 @@ public class InputTest {
         Assertions.assertEquals(data, output);
     }
 
+    //Validating that the y() function returns input properly
     @ParameterizedTest(name = "y_should_return_y")
     @CsvSource({
-            "1,1",
-            "2,2",
-            "3,3",
-            "4,4"
+            "2,1",
+            "3,2",
+            "4,3",
+            "5,4"
     })
     public void y_should_return_y(String data, String data1) throws IOException {
         String foo = data + "," + data1;
@@ -134,6 +141,6 @@ public class InputTest {
 
         boolean garb = input.readCoordinates();
         String output = Integer.toString(input.y());
-        Assertions.assertEquals(data, output);
+        Assertions.assertEquals(data1, output);
     }
 }
