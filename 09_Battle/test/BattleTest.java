@@ -31,7 +31,7 @@ public class BattleTest {
     // Test Battle to validate the ship size. Ship Size Values should be lower than SeaSize.
     @ParameterizedTest(name = "Battle_Ship_Size_Invalid_values")
     @CsvSource(value = {
-            "4;10,3,4", "4;0"}, delimiterString = ";")
+            "4;10,3,4", "4;0"}, delimiter = ';')
     public void Test_Battle_With_Invalid_Ship_Size_Values(int seaSize, @ConvertWith(IntArrayConverter.class) int[] shipSizes) {
 
         int[] shipCounts = new int[] { 2, 2, 2 };
@@ -46,7 +46,7 @@ public class BattleTest {
     // Test Battle to validate the ship count. Ship count should equal to Ship Size count.
     @ParameterizedTest(name = "Battle_Ship_Count_Invalid_values")
     @CsvSource(value = {
-            "4;1,3,4;1", "4;1;2,2"}, delimiterString = ";")
+            "4;1,3,4;1", "4;1;2,2"}, delimiter = ';')
 
     public void Test_Battle_With_Invalid_Ship_Count_Values(int seaSize, @ConvertWith(IntArrayConverter.class) int[] shipSizes, @ConvertWith(IntArrayConverter.class) int[] shipCounts) {
 
@@ -60,7 +60,7 @@ public class BattleTest {
     // Test Battle to validate the ship count. Ship count should equal to Ship Size count.
     @ParameterizedTest(name = "Battle_Ship_Count_Invalid_values")
     @CsvSource(value = {
-            "6;1,3,4;1,1,1", "4;1,1;1,1"}, delimiterString = ";")
+            "6;1,3,4;1,1,1", "4;1,1;1,1"}, delimiter = ';')
     public void Test_Battle_With_Valid_Values(int seaSize, @ConvertWith(IntArrayConverter.class) int[] shipSizes, @ConvertWith(IntArrayConverter.class) int[] shipCounts) {
 
         battle= new Battle(seaSize, shipSizes, shipCounts);
@@ -74,7 +74,7 @@ public class BattleTest {
     // Test Battle to validate the ship count. Ship count should equal to Ship Size count.
     @ParameterizedTest(name = "Battle_Ship_Count_Invalid_values")
     @CsvSource(value = {
-            "6;2,3,4;2,2,2"}, delimiterString = ";")
+            "6;2,3,4;2,2,2"}, delimiter = ';')
     public void Test_Battle_Play_Valid_Values(int seaSize, @ConvertWith(IntArrayConverter.class) int[] shipSizes, @ConvertWith(IntArrayConverter.class) int[] shipCounts) {
 
         battle= new Battle(seaSize, shipSizes, shipCounts);
