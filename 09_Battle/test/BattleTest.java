@@ -68,6 +68,8 @@ public class BattleTest {
         Assertions.assertEquals(shipSizes.length, battle.getSizes().length);
         Assertions.assertEquals(shipCounts.length, battle.getCounts().length);
         Assertions.assertEquals(seaSize, battle.getSea().size());
+        Assertions.assertEquals(0, battle.getLost());
+        Assertions.assertEquals(shipSizes.length,battle.getShips().size());
     }
     // Test Battle to validate the ship count. Ship count should equal to Ship Size count.
     @ParameterizedTest(name = "Battle_Ship_Count_Invalid_values")
