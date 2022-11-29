@@ -1,4 +1,3 @@
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,6 +10,7 @@ public class ShipTest {
     Ship ship;
     Ship shipTwo;
 
+    // Parameterized test for id function with valid input
     @ParameterizedTest(name = "test_Id_Function_with_Valid_Value")
     @CsvSource({
             "1, 1",
@@ -23,26 +23,27 @@ public class ShipTest {
         Assertions.assertEquals(IdActualResult, expectedId);
     }
 
-
+    // Parameterized test for size function with valid input
     @ParameterizedTest(name = "test_Size_Function_With_Valid_Value")
     @CsvSource({
             "1, 1",
             "5, 5",
             "10, 10"
     })
-
     public void test_Size_Function_With_Valid_Value(int sz, int expectedSz){
         ship = new Ship(1, sz);
         int IdActualResult = ship.size();
         Assertions.assertEquals(IdActualResult, expectedSz);
     }
 
+    // Check if isSunk function has return default status (false)
     @Test
     public void test_If_Ship_is_Sunk(){
         ship = new Ship(1,1);
         assertFalse(ship.isSunk());
     }
 
+    // Using mock to test placeRandom function
     @InjectMocks
     Sea seaMock = new Sea(1);
     @Test
@@ -58,6 +59,8 @@ public class ShipTest {
 
     }
 
+    // Using mock to test place function, with the scenario of catching exception
+    // for replacing ship twice
     @InjectMocks
     Sea seaMockForPlaced = new Sea(4);
     @Test
@@ -73,6 +76,7 @@ public class ShipTest {
 
     }
 
+    // Test place function for valid input
     @Test
     public void test_If_Ship_is_Placed(){
         ship = new Ship(1, 2);
@@ -80,6 +84,7 @@ public class ShipTest {
 
     }
 
+    // Test place function for invalid orientation
     @Test
     public void test_If_Orientation_Is_Invalid(){
         ship = new Ship(1,4);
@@ -92,6 +97,7 @@ public class ShipTest {
 
     }
 
+    // Place two ships with exact same parameters, and compare the result
     @ParameterizedTest(name = "test_If_orientation_Is_Valid")
     @CsvSource({
             "0,0",
@@ -107,6 +113,8 @@ public class ShipTest {
 
     }
 
+    // Place ship one in position and try to place ship two at the same starting
+    // coordinate
     @Test
     public void test_If_Starting_Position_Is_Occupied(){
         ship = new Ship(1,1);
@@ -116,6 +124,7 @@ public class ShipTest {
 
     }
 
+    // Input valid coordinate for hit function and test the condition of the ship
     @InjectMocks
     Sea seaMockForHit = new Sea(1);
     @Test
@@ -127,6 +136,7 @@ public class ShipTest {
 
     }
 
+    // Using orientation of Y coordinate to test hit function
     @Test
     public void test_If_Ship_is_Hit_Using_Y_Coordinate(){
         ship = new Ship(1,2);
@@ -136,6 +146,7 @@ public class ShipTest {
 
     }
 
+    // Test if hit function is matching the player's coordinate input
     @Test
     public void test_If_Ship_was_Hit(){
         ship = new Ship(1,1);
@@ -145,6 +156,7 @@ public class ShipTest {
 
     }
 
+    // Test if the ship has already been hit using Y coordinate
     @Test
     public void test_If_Ship_Was_Hit_Using_Y_Coordinate(){
         ship = new Ship(1,2);
@@ -154,6 +166,7 @@ public class ShipTest {
 
     }
 
+    // Test if two tiles in the sea has been occupied by same ship
     @Test
     public void test_If_Ship_Collide_Tiles(){
         ship = new Ship(1,2);

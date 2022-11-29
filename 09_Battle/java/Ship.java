@@ -29,12 +29,13 @@ class Ship {
         hits = new ArrayList<>(Collections.nCopies(size, false));
     }
 
-    /** @returns the ship number */
+    // @returns the ship number
     public int id() { return id; }
-    /** @returns the ship size */
+
+    // @returns the ship size
     public int size() { return size; }
 
-    /* record the ship as having been hit at the given coordinates */
+    // record the ship as having been hit at the given coordinates */
     public void hit(int x, int y) {
         // need to work out how many tiles from the ship's starting position the hit is at
         // that can be worked out from the difference between the starting X coord and this one
@@ -51,6 +52,7 @@ class Ship {
         sunk = hits.stream().allMatch(Predicate.isEqual(true));
     }
 
+    // record if the ship is sunk with default is false
     public boolean isSunk() { return sunk; }
 
     // whether the ship has already been hit at the given coordinates
@@ -164,7 +166,9 @@ class Ship {
         return false;
     }
 
+    // Helper to retrieve result from extendShip method
     public boolean extendShipHelp(Sea s, int fromX, int fromY, int toX, int toY){
         return extendShip(s,fromX, fromY, toX, toY);
     }
+
 }
