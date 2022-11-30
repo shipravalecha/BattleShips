@@ -101,10 +101,11 @@ public class UITest {
             System.setIn(new ByteArrayInputStream(s.getBytes()));
             battle.play();
             System.out.println(s);
-            Thread.sleep(700);
+            //Thread.sleep(700);
         }
 
         System.out.println("Ships Sunk: " + battle.getLosses().length);
+        //Thread.sleep(7000);
 
         Assertions.assertEquals(1, battle.getLosses().length);
         Assertions.assertEquals(1, battle.getMisses());
@@ -131,9 +132,9 @@ public class UITest {
             System.setIn(new ByteArrayInputStream((s.getBytes())));
             battle.play();
             System.out.println(s);
-            Thread.sleep(700);
+            //Thread.sleep(700);
         }
-
+        //Thread.sleep(7000);
         Assertions.assertEquals(true, true);
     }
 
