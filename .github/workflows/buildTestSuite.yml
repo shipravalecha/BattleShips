@@ -47,7 +47,7 @@ jobs:
           to: shipravalecha92@gmail.com
           from: Shipra
           body: Build job of ${{github.repository}} completed successfully!
-          html_body: file://README.html
+          html_body: file://SuccessEmail.html
              
           
     - name: Send Failure Email For tests
