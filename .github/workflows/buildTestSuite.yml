@@ -33,9 +33,8 @@ jobs:
       if: steps.buildProject.outcome == 'success'
       id: buildAndTestProject
       run: mvn -B package --file pom.xml
-      
     - name: Send Success Email
-      if: ${{ steps.buildProject.outcome == 'success' }} && ${{ steps.buildAndTestProject.outcome == 'success' }}
+      if: always() && ${{ steps.buildProject.outcome == 'success' }} && ${{ steps.buildAndTestProject.outcome == 'success' }}
       uses: dawidd6/action-send-mail@v3
       with:
           server_address: smtp.gmail.com
@@ -49,7 +48,7 @@ jobs:
           body: Build and test job of ${{github.repository}} completed successfully!
           
     - name: Send Failure Email For tests
-      if: ${{ steps.buildProject.outcome == 'success' }} && ${{ steps.buildAndTestProject.outcome == 'failure' }}
+      if: always() && ${{ steps.buildProject.outcome == 'success' }} && ${{ steps.buildAndTestProject.outcome == 'failure' }}
       uses: dawidd6/action-send-mail@v3
       with:
           server_address: smtp.gmail.com
@@ -63,7 +62,7 @@ jobs:
           body: Build succeeded but test job of ${{github.repository}} failed!
           
     - name: Send Failure Email For both build and test
-      if: ${{ steps.buildProject.outcome != 'success' }}
+      if: always() && ${{ steps.buildProject.outcome != 'success' }}
       uses: dawidd6/action-send-mail@v3
       with:
           server_address: smtp.gmail.com
