@@ -132,7 +132,7 @@ public class InputTest {
             "2,1",
             "3,2",
             "4,3",
-            "5,5"
+            "5,4"
     })
     public void y_should_return_y(String data, String data1) throws IOException {
         String foo = data + "," + data1;
