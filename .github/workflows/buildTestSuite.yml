@@ -33,6 +33,7 @@ jobs:
       if: steps.buildProject.outcome == 'success'
       id: buildAndTestProject
       run: mvn -B package --file pom.xml
+      
     - name: Send Success Email
       if: always() && steps.buildProject.outcome == 'success'  && steps.buildAndTestProject.outcome == 'success'
       uses: dawidd6/action-send-mail@v3
@@ -45,7 +46,10 @@ jobs:
           subject: Build and Test job result- Successful!
           to: shipravalecha92@gmail.com
           from: Shipra
-          body: Build and test job of ${{github.repository}} completed successfully!
+          body: Test results
+              - Did Build succeed (True/false) - True
+              - Did Tests Pass (True/false) - True
+             
           
     - name: Send Failure Email For tests
       if: always() && steps.buildProject.outcome == 'success' && steps.buildAndTestProject.outcome == 'failure'
