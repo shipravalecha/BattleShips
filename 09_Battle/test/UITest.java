@@ -19,7 +19,7 @@ public class UITest {
     @Test
     public void UI_Sinking_A_Ship() throws FileNotFoundException {
         PrintStream console = System.out;
-        PrintStream fileOut = new PrintStream("./09_Battle/output/UI_Sinking_A_Ship.txt");
+        PrintStream fileOut = new PrintStream("./UI_Sinking_A_Ship.txt");
         String[] input = {"1,1", "1,2", "1,3", "1,4", "4,1", "3,1", "2,1", "1,1"};
 
         System.setOut(fileOut);
@@ -41,7 +41,7 @@ public class UITest {
     @Test
     public void UI_Test_Win() throws FileNotFoundException {
         PrintStream console = System.out;
-        PrintStream fileOut = new PrintStream("./09_Battle/output/UI_Test_Win.txt");
+        PrintStream fileOut = new PrintStream("./UI_Test_Win.txt");
 
         String[] input = {"1,1", "1,2", "1,3", "1,4", "1,5", "1,6",
                 "2,1", "2,2", "2,3", "2,4", "2,5", "2,6",
@@ -70,7 +70,7 @@ public class UITest {
     @Test
     public void Miss_Should_Increase_Misses() throws FileNotFoundException {
         PrintStream console = System.out;
-        PrintStream fileOut = new PrintStream("./09_Battle/output/Miss_Should_Increase_Misses.txt");
+        PrintStream fileOut = new PrintStream("./Miss_Should_Increase_Misses.txt");
         String input = "1,1";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
@@ -101,7 +101,7 @@ public class UITest {
             System.setIn(new ByteArrayInputStream(s.getBytes()));
             battle.play();
             System.out.println(s);
-            Thread.sleep(1000);
+            Thread.sleep(700);
         }
 
         System.out.println("Ships Sunk: " + battle.getLosses().length);
@@ -131,7 +131,7 @@ public class UITest {
             System.setIn(new ByteArrayInputStream((s.getBytes())));
             battle.play();
             System.out.println(s);
-            Thread.sleep(1000);
+            Thread.sleep(700);
         }
 
         Assertions.assertEquals(true, true);
