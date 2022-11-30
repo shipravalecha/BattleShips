@@ -46,9 +46,9 @@ jobs:
           subject: Build and Test job result- Successful!
           to: shipravalecha92@gmail.com
           from: Shipra
-          body: Test results
-              - Did Build succeed (True/false) - True
-              - Did Tests Pass (True/false) - True
+          body: <h2>Test results</h2> </br>
+              <h3>Did Build succeed (True/false)</h3> - <strong>True</strong> </br>
+             <h3> Did Tests Pass (True/false) </h3> - <strong>True</strong>
              
           
     - name: Send Failure Email For tests
