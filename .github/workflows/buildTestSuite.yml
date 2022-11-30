@@ -37,10 +37,10 @@ jobs:
           secure: true
           username: ${{secrets.MAIL_USERNAME}}
           password: ${{secrets.MAIL_PASSWORD}}
-          subject: Github Actions Build and Test job result
+          subject: Build and Test job result- Successful!
           to: shipravalecha92@gmail.com
           from: Shipra
-          body: Build and test job of ${{github.repository}} completed successfully!
+          body: Build and test job of ${{github.repository}} completed <style="color:green">successfully!
           
     - name: Send Failure Email
       if: failure()
@@ -51,9 +51,9 @@ jobs:
           secure: true
           username: ${{secrets.MAIL_USERNAME}}
           password: ${{secrets.MAIL_PASSWORD}}
-          subject: Github Actions Build and Test job result
+          subject: Build and Test job result- Faiure!
           to: shipravalecha92@gmail.com
           from: Shipra
-          body: Build and test job of ${{github.repository}} failed!
+          body: Build and test job of ${{github.repository}} <style="color:red">failed!
           
 
