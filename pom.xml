@@ -16,7 +16,22 @@
 
     <build>
         <plugins>
-            
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.4.10</version>
+                <configuration>
+                    <targetClasses>
+                        <param>production.09_Battle*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>production.09_Battle*</param>
+                    </targetTests>
+                    <mutators>
+                        <mutator>ALL</mutator>
+                    </mutators>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
