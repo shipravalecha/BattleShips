@@ -26,10 +26,15 @@ jobs:
         restore-keys: ${{ runner.os }}-m2  
 
     - name: Build project with Maven
+      id: buildProject
       run: mvn -B package --file pom.xml -Dmaven.test.skip=true
       
+    - name: Build project with Maven
+      id: buildAndTestProject
+      run: mvn -B package --file pom.xml
+      
     - name: Send Success Email
-      if: success()
+      if: steps.BuildProject.outcome == "success" && steps.buildAndTestProject.outcome == "success"
       uses: dawidd6/action-send-mail@v3
       with:
           server_address: smtp.gmail.com
@@ -42,8 +47,8 @@ jobs:
           from: Shipra
           body: Build and test job of ${{github.repository}} completed successfully!
           
-    - name: Send Failure Email
-      if: failure()
+    - name: Send Failure Email For tests
+      if: steps.BuildProject.outcome == "success" && steps.buildAndTestProject.outcome != "success"
       uses: dawidd6/action-send-mail@v3
       with:
           server_address: smtp.gmail.com
@@ -54,6 +59,20 @@ jobs:
           subject: Build and Test job result- Failure!
           to: shipravalecha92@gmail.com
           from: Shipra
-          body: Build and test job of ${{github.repository}} failed!
+          body: Build succeeded but test job of ${{github.repository}} failed!
+          
+    - name: Send Failure Email For both build and test
+      if: steps.BuildProject.outcome != "success"
+      uses: dawidd6/action-send-mail@v3
+      with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          subject: Build and Test job result- Failure!
+          to: shipravalecha92@gmail.com
+          from: Shipra
+          body: Build and unit test cases failed 
           
 
