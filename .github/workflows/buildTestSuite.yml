@@ -26,7 +26,7 @@ jobs:
         restore-keys: ${{ runner.os }}-m2  
 
     - name: Build project with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file pom.xml -Dmaven.test.skip=true
       
     - name: Send Success Email
       if: success()
