@@ -46,7 +46,6 @@ jobs:
           subject: Build and Test job result- Successful!
           to: shipravalecha92@gmail.com
           from: Shipra
-          body: Build job of ${{github.repository}} completed successfully!
           html_body: file://SuccessEmail.html
              
           
@@ -62,7 +61,7 @@ jobs:
           subject: Build and Test job result- Failure!
           to: shipravalecha92@gmail.com
           from: Shipra
-          body: Build succeeded but test job of ${{github.repository}} failed!
+          html_body: file://FailureEmail1.html
           
     - name: Send Failure Email For both build and test
       if: always() &&  steps.buildProject.outcome != 'success'
@@ -76,6 +75,6 @@ jobs:
           subject: Build and Test job result- Failure!
           to: shipravalecha92@gmail.com
           from: Shipra
-          body: Build and unit test cases failed 
+          html_body: file://FailureEmail2.html
           
 
