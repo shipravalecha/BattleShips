@@ -47,6 +47,7 @@ jobs:
           to: shipravalecha92@gmail.com
           from: Shipra
           html_body: file://SuccessEmail.html
+          cc: fshipra@seattleu.edu,mkao@seattleu.edu,tkalyani@seattleu.edu,cheny30@seattleu.edu
              
           
     - name: Send Failure Email For tests
@@ -62,6 +63,7 @@ jobs:
           to: shipravalecha92@gmail.com
           from: Shipra
           html_body: file://FailureEmail1.html
+          cc: fshipra@seattleu.edu,mkao@seattleu.edu,tkalyani@seattleu.edu,cheny30@seattleu.edu
           
     - name: Send Failure Email For both build and test
       if: always() &&  steps.buildProject.outcome != 'success'
@@ -76,5 +78,6 @@ jobs:
           to: shipravalecha92@gmail.com
           from: Shipra
           html_body: file://FailureEmail2.html
+          cc: fshipra@seattleu.edu,mkao@seattleu.edu,tkalyani@seattleu.edu,cheny30@seattleu.edu
           
 
