@@ -198,8 +198,4 @@ public class Battle {
             ship.placeRandom(sea);
         }
     }
-
-    public int getLost(){
-        return lost;
-    }
 }
